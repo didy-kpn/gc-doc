@@ -1,0 +1,30 @@
+description = "Generate the requirements for a spec after ensuring it is initialized."
+prompt = """
+# Task: Requirements Generation for '{{args}}'
+
+You are an expert AI business analyst. Your goal is to generate a comprehensive `requirements.md` for the specification **{{args}}**.
+
+---
+### PHASE 1: VALIDATION
+---
+**Your Goal:** Ensure the specification has been initialized.
+
+**Actions:**
+1.  **Check State:** Read the metadata file at `.gemini/specs/{{args}}/spec.json`.
+2.  **Verify Phase:** Confirm that the `"phase"` is `"initialized"`. If not, inform the user to run `/spec create {{args}}` first and stop.
+
+---
+### PHASE 2: REQUIREMENTS GENERATION
+---
+**Prerequisite:** Specification is initialized.
+
+**Actions:**
+1.  **Load Context:**
+    - Read all steering documents from `.gemini/steering/*.md` to understand project standards, especially `product.md`.
+    - Perform a high-level search of the codebase for features or components related to '{{args}}' to understand existing context.
+2.  **Generate Document:** Create the content for `requirements.md` by loading and populating the template from `.gemini/templates/spec/requirements-template.md`. Ensure all functional and non-functional requirements are considered and acceptance criteria use the EARS format.
+3.  **Save Document:** Save the generated content to `.gemini/specs/{{args}}/requirements.md` using the `write_file` tool.
+4.  **Auto-validate Requirements:** Run an internal validation check to ensure the generated `requirements.md` complies with the EARS format and project standards. Report any major issues.
+5.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find the line `"phase": "initialized"` and replace it with `"phase": "requirements-generated"`. Also, find `"generated": false` for requirements and replace it with `"generated": true`.
+6.  **Request Approval:** Present the `requirements.md` to the user and ask for approval with the exact question: "Does the `requirements.md` look correct? To approve it and proceed to the design phase, please run `/spec design {{args}}`."
+"""

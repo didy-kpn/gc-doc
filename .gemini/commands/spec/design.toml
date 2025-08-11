@@ -2,7 +2,7 @@ description = "Generate the technical design for a spec after ensuring requireme
 prompt = """
 # Task: Technical Design Generation for '{{args}}'
 
-You are an expert AI system architect. Your goal is to create a technical design for the specification **{{args}}**.
+You are an expert AI system architect. Your goal is to create a comprehensive technical design for the specification **{{args}}**.
 
 ---
 ### PHASE 1: REQUIREMENTS APPROVAL
@@ -11,10 +11,10 @@ You are an expert AI system architect. Your goal is to create a technical design
 
 **Actions:**
 1.  **Check State:** Read the metadata file at `.gemini/specs/{{args}}/spec.json`.
-2.  **Verify Approval:** Check if `approvals.requirements.approved` is `true`. 
+2.  **Verify Approval:** Check if `approvals.requirements.approved` is `true`.
 3.  **If Not Approved:**
     a.  Show the user the content of `.gemini/specs/{{args}}/requirements.md`.
-    b.  Ask the user the exact question: "The requirements for '{{args}}' are not yet approved. Please review them. To confirm your approval and proceed to the design phase, please respond with 'y'."
+    b.  Ask the user the exact question: "The requirements for '{{args}}' are not yet approved. Please review them. To confirm your approval and proceed, please respond with 'y'."
     c.  **Await user response.** If the user responds with 'y', proceed. Otherwise, stop.
     d.  **Update State on Approval:** If the user approved, use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find `"approved": false` for requirements and replace it with `"approved": true`. Also, update the phase to "requirements-approved".
 
@@ -28,10 +28,10 @@ You are an expert AI system architect. Your goal is to create a technical design
     - Read the approved `.gemini/specs/{{args}}/requirements.md`.
     - Read all steering documents from `.gemini/steering/*.md` (`tech.md`, `structure.md`).
 2.  **Analyze Codebase (MANDATORY):**
-    - Conduct a deep analysis of the existing codebase to identify reusable patterns, components, and utilities.
-3.  **Generate Document:** Create the content for `design.md` using the template from `.gemini/templates/spec/design-template.md`.
+    - Conduct a deep analysis of the existing codebase. Identify reusable patterns, components, and utilities. Document how the new design will integrate with or extend existing code.
+3.  **Generate Document:** Create the content for `design.md` using the template from `.gemini/templates/spec/design-template.md`. Ensure every requirement from `requirements.md` is addressed in the design.
 4.  **Save Document:** Save the content to `.gemini/specs/{{args}}/design.md` using the `write_file` tool.
-5.  **Auto-validate Design:** Run an internal validation check to ensure the generated `design.md` is architecturally sound and covers all requirements. Report any major issues.
+5.  **Auto-validate Design:** Run an internal validation check to ensure the design is architecturally sound, covers all requirements, and aligns with steering documents. Report any major issues.
 6.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find the line `"phase": "requirements-approved"` and replace it with `"phase": "design-generated"`. Also, update `approvals.design.generated` to `true`.
-7.  **Request Approval:** Present the `design.md` to the user and ask for approval with the exact question: "Does the `design.md` look correct? To approve it and proceed to the task generation phase, please run `/spec tasks {{args}}`."
+7.  **Request Approval:** Present the `design.md` to the user and ask for approval with the exact question: "Does the `design.md` look correct? To approve it and proceed to task generation, please run `/spec tasks {{args}}`."
 """

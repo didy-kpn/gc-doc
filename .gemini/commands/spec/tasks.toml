@@ -2,7 +2,7 @@ description = "Generate atomic implementation tasks for a spec after ensuring th
 prompt = """
 # Task: Implementation Task Generation for '{{args}}'
 
-You are an expert AI tech lead. Your goal is to break down the design for **{{args}}** into a list of small, atomic implementation tasks.
+You are an expert AI tech lead. Your goal is to break down the approved design for **{{args}}** into a list of small, atomic, and testable implementation tasks.
 
 ---
 ### PHASE 1: DESIGN APPROVAL
@@ -14,7 +14,7 @@ You are an expert AI tech lead. Your goal is to break down the design for **{{ar
 2.  **Verify Approval:** Check if `approvals.design.approved` is `true`.
 3.  **If Not Approved:**
     a.  Show the user the content of `.gemini/specs/{{args}}/design.md`.
-    b.  Ask the user the exact question: "The design for '{{args}}' is not yet approved. Please review it. To confirm your approval and proceed to the task generation phase, please respond with 'y'."
+    b.  Ask the user the exact question: "The design for '{{args}}' is not yet approved. Please review it. To confirm your approval and proceed, please respond with 'y'."
     c.  **Await user response.** If the user responds with 'y', proceed. Otherwise, stop.
     d.  **Update State on Approval:** If the user approved, use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find `"approved": false` for design and replace it with `"approved": true`. Also, update the phase to "design-approved".
 
@@ -26,9 +26,9 @@ You are an expert AI tech lead. Your goal is to break down the design for **{{ar
 **Actions:**
 1.  **Load Context:** Read `.gemini/specs/{{args}}/requirements.md` and `.gemini/specs/{{args}}/design.md`.
 2.  **Generate Tasks:**
-    - Decompose the design into a sequence of concrete, executable coding tasks.
-    - Use the detailed template from `.gemini/templates/spec/tasks-template.md` to structure the output.
+    - Decompose the design into a sequence of concrete, executable coding tasks. Each task must be atomic (1-3 hours), testable, and include specific file paths.
+    - Use the detailed template from `.gemini/templates/spec/tasks-template.md` to structure the output, ensuring each task maps to a requirement.
 3.  **Save Document:** Save the content to `.gemini/specs/{{args}}/tasks.md` using the `write_file` tool.
 4.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find the line `"phase": "design-approved"` and replace it with `"phase": "tasks-generated"`. Also, update `approvals.tasks.generated` to `true`.
-5.  **Conclude:** Inform the user that the specification process is complete and they can start implementation using the `/spec implement` command.
+5.  **Conclude:** Inform the user that the specification process is complete and they can start implementation using the `/spec implement` command for a specific task ID.
 """
