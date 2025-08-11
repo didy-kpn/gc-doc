@@ -1,0 +1,16 @@
+{
+  "name": "Gemini CLI",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:0-bullseye",
+  "features": {},
+  "postCreateCommand": "npm install -g npm@11.4.2 @google/gemini-cli",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      "extensions": [],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
