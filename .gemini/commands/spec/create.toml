@@ -1,4 +1,4 @@
-description = "Initialize a new spec and generate requirements."
+description = "Initialize a new spec, create spec.json, and generate requirements."
 prompt = """
 # Task: Specification Initialization and Requirements Generation for '{{args}}'
 
@@ -8,25 +8,34 @@ The specification name is: **{{args}}**.
 ---
 ### PHASE 1: INITIALIZATION
 ---
-**Your Goal:** Create the directory structure for the new specification.
-**Action:**
-1. Create the directory `.gemini/specs/{{args}}/` if it does not exist. You can use `run_shell_command` with `mkdir -p`.
+**Your Goal:** Create the directory structure and the `spec.json` metadata file.
+
+**Actions:**
+1.  **Create Directory:** Create the directory `.gemini/specs/{{args}}/` if it does not exist. You can use `run_shell_command` with `mkdir -p`.
+2.  **Create spec.json:** Create a metadata file at `.gemini/specs/{{args}}/spec.json` using the `write_file` tool. This file is CRITICAL for tracking the specification's progress. Use the following content:
+    ```json
+    {
+      "feature_name": "{{args}}",
+      "created_at": "{{timestamp}}",
+      "phase": "initialized",
+      "approvals": {
+        "requirements": { "generated": false, "approved": false },
+        "design": { "generated": false, "approved": false },
+        "tasks": { "generated": false, "approved": false }
+      }
+    }
+    ```
 
 ---
-### PHASE 2: REQUIREMENTS
+### PHASE 2: REQUIREMENTS GENERATION
 ---
-**Your Goal:** Generate a `requirements.md` file.
-**Action:**
+**Your Goal:** Generate a `requirements.md` file based on project context and templates.
+
+**Actions:**
 1.  **Load Context:** Read all steering documents from `.gemini/steering/*.md` to understand project standards.
 2.  **Analyze Codebase:** Perform a high-level search of the codebase for features or components related to '{{args}}'.
 3.  **Generate Document:** Create the content for `requirements.md` by loading and populating the template from `.gemini/templates/spec/requirements-template.md`.
-4.  **Self-Validate:** Before presenting to the user, review the generated document against this checklist:
-    - [ ] Are user stories clear and follow the standard format?
-    - [ ] Are acceptance criteria written in EARS format and are they testable?
-    - [ ] Do the type skeletons capture the essential data structures?
-    - [ ] Does the document align with the project's product vision from `product.md`?
-5.  **Save and Request Approval:**
-    - Save the content to `.gemini/specs/{{args}}/requirements.md` using the `write_file` tool.
-    - Ask the user for approval with the exact question: "Does the `requirements.md` look correct? If so, please approve to proceed. You can then run `/spec design {{args}}`."
-    - Await the user's response.
+4.  **Save Document:** Save the generated content to `.gemini/specs/{{args}}/requirements.md` using the `write_file` tool.
+5.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find the line `"phase": "initialized"` and replace it with `"phase": "requirements-generated"`. Also, find `"generated": false` for requirements and replace it with `"generated": true`.
+6.  **Request Approval:** Present the `requirements.md` to the user and ask for approval with the exact question: "Does the `requirements.md` look correct? If so, you can approve it by running `/spec design {{args}}` which will proceed to the next phase."
 """

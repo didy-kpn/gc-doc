@@ -1,14 +1,14 @@
 # Design: {{args}}
 
 ## 1. Overview
-[High-level description of the feature and its place in the overall system.]
+[High-level description of the feature and its place in the overall system, referencing key requirements from `requirements.md`.]
 
 ## 2. Steering Document Alignment
 - **Technical Standards (`tech.md`):** [How the design follows documented technical patterns and standards.]
 - **Project Structure (`structure.md`):** [How the implementation will follow project organization conventions.]
 
 ## 3. Code Reuse Analysis
-[What existing code will be leveraged, extended, or integrated with this feature.]
+[What existing code (components, services, utilities) will be leveraged, extended, or integrated with this feature.]
 - **Existing Components to Leverage:**
   - `[Component/Utility Name]`: [How it will be used.]
 - **Integration Points:**
@@ -20,7 +20,7 @@
 ```mermaid
 graph TD
     A[Client] --> B[API Gateway]
-    B --> C[Service Layer]
+    B --> C[Service: {{args}}]
     C --> D[Data Access Layer]
     D --> E[Database]
 ```
