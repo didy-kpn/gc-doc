@@ -1,0 +1,27 @@
+description = "Generate atomic implementation tasks for a spec."
+prompt = """
+# Task: Implementation Task Generation for '{{args}}'
+
+You are an expert AI tech lead. Your goal is to break down the design for **{{args}}** into a list of small, atomic implementation tasks.
+
+---
+### TASKS PHASE
+---
+**Prerequisite:** The `design.md` for '{{args}}' must exist and be approved.
+
+**Action:**
+1.  **Load Context:** Read `.gemini/specs/{{args}}/requirements.md` and `.gemini/specs/{{args}}/design.md`.
+2.  **Generate Tasks:**
+    - Decompose the design into a sequence of concrete, executable coding tasks.
+    - Frame tasks as clear, imperative instructions for a developer.
+    - Ensure every task is "atomic" (1-3 related files, completable in a short time).
+    - Use the template from `.gemini/templates/spec/tasks-template.md` to structure the output.
+3.  **Self-Validate:** Before presenting, review the generated task list against this checklist:
+    - [ ] Is every task atomic and clearly defined?
+    - [ ] Does the task list cover the entire design?
+    - [ ] Is there a clear reference to the requirements (`_Requirements: ...`) for each task?
+    - [ ] Are dependencies between tasks logical?
+4.  **Save and Conclude:**
+    - Save the content to `.gemini/specs/{{args}}/tasks.md` using the `write_file` tool.
+    - Inform the user that the specification process is complete and they can start implementation using the `/spec implement` command.
+"""

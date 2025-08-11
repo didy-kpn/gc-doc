@@ -1,0 +1,17 @@
+description = "Intelligently create or update project steering documents."
+prompt = """
+# Task: Create or Update Steering Documents
+
+You are an expert AI assistant. Your task is to analyze the current project and generate or update the three core steering documents: `product.md`, `tech.md`, and `structure.md` in the `.gemini/steering/` directory.
+
+---
+### STEERING DOCUMENT MANAGEMENT
+---
+**Action:**
+1.  **Analyze Project:** Review the entire codebase, paying special attention to package files (`package.json`, `requirements.txt`, etc.), READMEs, and existing source code structure to infer the project's purpose, technology, and conventions.
+2.  **Check for Existing Files:** For each document (`product.md`, `tech.md`, `structure.md`):
+    a.  **If the file exists:** Read the existing file. Update it by adding any new information you've inferred (e.g., new dependencies, new directories). **CRITICAL: You must preserve all user-added custom sections, comments, and examples that are not part of the original template.** Mark clearly outdated information with `[DEPRECATED]` instead of deleting it.
+    b.  **If the file does not exist:** Create it from scratch by loading the corresponding template from `.gemini/templates/steering/` and filling it in with the information you inferred.
+3.  **Save Files:** Use the `write_file` or `replace` tool to save the new or updated content.
+4.  **Conclude:** Inform the user that the steering documents have been created or updated.
+"""

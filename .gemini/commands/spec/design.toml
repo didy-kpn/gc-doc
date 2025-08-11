@@ -1,0 +1,30 @@
+description = "Generate the technical design for a spec."
+prompt = """
+# Task: Technical Design Generation for '{{args}}'
+
+You are an expert AI system architect. Your goal is to create a technical design for the specification **{{args}}**.
+
+---
+### DESIGN PHASE
+---
+**Prerequisite:** The `requirements.md` for '{{args}}' must exist and be approved.
+
+**Action:**
+1.  **Load Context:**
+    - Read the approved `.gemini/specs/{{args}}/requirements.md`.
+    - Read all steering documents from `.gemini/steering/*.md` (`tech.md`, `structure.md`).
+2.  **Analyze Codebase (MANDATORY):**
+    - Conduct a deep analysis of the existing codebase.
+    - Identify reusable patterns, components, services, and utilities that should be leveraged in the design.
+    - Document these findings as part of the "Code Reuse Analysis" section of the design.
+3.  **Generate Document:** Create the content for `design.md` by loading and populating the template from `.gemini/templates/spec/design-template.md`.
+4.  **Self-Validate:** Before presenting, review the generated design against this checklist:
+    - [ ] Does the design cover all functional and non-functional requirements?
+    - [ ] Does the architecture align with `tech.md` and `structure.md`?
+    - [ ] Are code reuse opportunities maximized?
+    - [ ] Are all diagrams (Mermaid) correct and easy to understand?
+5.  **Save and Request Approval:**
+    - Save the content to `.gemini/specs/{{args}}/design.md` using the `write_file` tool.
+    - Ask the user for approval with the exact question: "Does the `design.md` look correct? If so, please approve to proceed. You can then run `/spec tasks {{args}}`."
+    - Await the user's response.
+"""
