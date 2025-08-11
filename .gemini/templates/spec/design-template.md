@@ -25,28 +25,77 @@ graph TD
     D --> E[Database]
 ```
 
-## 5. Components and Interfaces
+## 5. Data Flow
+[Describe how data flows through the system for the main user scenarios. Use a sequence diagram.]
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant API
+    participant DB
+    
+    User->>Frontend: Perform Action (e.g., Submit Form)
+    Frontend->>API: POST /api/{{args}}
+    API->>DB: Insert new record
+    DB-->>API: Return new record
+    API-->>Frontend: Respond with 201 Created
+    Frontend-->>User: Show success message
+```
+
+## 6. API Endpoints
+[Provide a detailed API endpoint table.]
+
+| Method | Route                  | Purpose                | Auth?    | Success Codes | Error Codes       |
+|--------|------------------------|------------------------|----------|---------------|-------------------|
+| GET    | /api/{{args}}           | List all resources     | Required | 200           | 401, 500          |
+| POST   | /api/{{args}}           | Create a new resource  | Required | 201           | 400, 401, 500     |
+| GET    | /api/{{args}}/{id}      | Get a single resource  | Required | 200           | 401, 404, 500     |
+| PUT    | /api/{{args}}/{id}      | Update a resource      | Required | 200           | 400, 401, 404, 500|
+| DELETE | /api/{{args}}/{id}      | Delete a resource      | Required | 204           | 401, 404, 500     |
+
+## 7. Components and Interfaces
 ### Component: [Component Name]
 - **Purpose:** [What this component does.]
 - **Interfaces/API:** [Public methods, API endpoints, props.]
 - **Dependencies:** [What it depends on.]
 
-## 6. Data Models & Contracts (Language-Specific)
+## 8. Data Models & Entity Relationships
+
+### Entity Relationship Diagram
+```mermaid
+erDiagram
+    USER ||--o{ {{args}} : "creates"
+    {{args}} {
+        string id
+        string name
+        datetime created_at
+    }
+    USER {
+        string id
+        string username
+    }
+```
+
+### Data Contracts (Language-Specific)
 *This section defines language-specific types and invariants. Example for TypeScript:*
 ```typescript
 // Invariant: email must be a valid email format.
-interface User {
+interface {{args}} {
   id: string;
   name: string;
-  email: string;
+  // ... other properties
+  createdAt: Date;
+  updatedAt: Date;
 }
 ```
 
-## 7. Error Handling
+## 9. Error Handling
 - **Scenario 1:** [Description of a potential error.]
   - **Handling:** [How the system will handle it.]
   - **User Impact:** [What the user will see.]
 
-## 8. Testing Strategy
+## 10. Testing Strategy
 - **Unit Testing:** [Key components/logic to unit test.]
 - **Integration Testing:** [Key integration points to test.]
+- **End-to-End Testing:** [Critical user flows to test via E2E.]

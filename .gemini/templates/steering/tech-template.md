@@ -12,10 +12,11 @@
 ## 3. Development Environment
 - **Package Manager:** [e.g., npm, pip, poetry]
 - **Build Tools:** [e.g., Vite, Webpack, tsc]
-- **Common Commands:**
-  - `npm install`: Install dependencies.
-  - `npm run dev`: Run the development server.
-  - `npm test`: Run unit tests.
+
+### Common Commands
+- `npm install`: Install dependencies.
+- `npm run dev`: Run the development server.
+- `npm test`: Run unit tests.
 
 ## 4. Technical Decisions & Rationale
 - **[Technology/Pattern Choice]:** [Why this was chosen, alternatives considered.]

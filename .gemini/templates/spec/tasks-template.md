@@ -12,26 +12,32 @@
 ## 3. Task Format Guidelines
 - Use checkbox format: `- [ ] 1. Task Description`
 - **Specify files**: Always include exact file paths to create/modify.
-- Reference requirements using: `_Requirements: 3.1, 4.0_`
-- Reference existing code to leverage using: `_Leverage: path/to/file.ts_`
+- **Reference requirements**: Map each task to the requirements it fulfills. `_Requirements: 3.1_`
+- **Reference existing code**: Note any existing code to leverage. `_Leverage: path/to/file.ts_`
 
 --- 
-*Example Tasks:*
+*Example TDD-style Tasks:*
 
-- [ ] **1. Task: Create the data model and validation schema.**
-  - **Files:** `src/models/{{args}}.ts`
-  - **Details:** Implement the TypeScript interface and Zod schema for the `{{args}}` model, based on the data contracts in `design.md`.
-  - **_Leverage: `src/models/Base.ts`_**
-  - **_Requirements: 3.1_**
-
-- [ ] **2. Task: Write unit tests for the data model.**
+- [ ] **1. Task: Write failing unit tests for the `{{args}}` data model.**
   - **Files:** `src/models/{{args}}.test.ts`
-  - **Details:** Write unit tests to verify the validation logic of the `{{args}}` model. Test both valid and invalid data scenarios.
+  - **Details:** Write unit tests to verify the validation logic of the `{{args}}` model. Test both valid and invalid data scenarios. The tests should fail initially.
   - **_Leverage: `jest`, `zod`_**
   - **_Requirements: 3.1_**
 
-- [ ] **3. Task: Implement the business logic in a service layer.**
+- [ ] **2. Task: Create the `{{args}}` data model to pass the tests.**
+  - **Files:** `src/models/{{args}}.ts`
+  - **Details:** Implement the TypeScript interface and Zod schema for the `{{args}}` model, based on the data contracts in `design.md`. Ensure all tests from the previous task now pass.
+  - **_Leverage: `src/models/Base.ts`_**
+  - **_Requirements: 3.1_**
+
+- [ ] **3. Task: Write failing integration tests for the `{{args}}` service.**
+  - **Files:** `src/services/{{args}}Service.test.ts`
+  - **Details:** Write integration tests for the service layer. Mock the database layer. Test the core business logic (create, update, get).
+  - **_Leverage: `jest`_**
+  - **_Requirements: 3.1, 3.2_**
+
+- [ ] **4. Task: Implement the `{{args}}` service to pass the tests.**
   - **Files:** `src/services/{{args}}Service.ts`
-  - **Details:** Create a service class that handles the core business logic for creating, updating, and retrieving `{{args}}` data.
+  - **Details:** Create a service class that handles the core business logic for `{{args}}` data. Implement the methods needed to make the integration tests pass.
   - **_Leverage: `src/services/DatabaseService.ts`_**
   - **_Requirements: 3.1, 3.2_**

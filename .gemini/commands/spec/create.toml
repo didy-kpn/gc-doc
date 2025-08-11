@@ -36,6 +36,7 @@ The specification name is: **{{args}}**.
 2.  **Analyze Codebase:** Perform a high-level search of the codebase for features or components related to '{{args}}'.
 3.  **Generate Document:** Create the content for `requirements.md` by loading and populating the template from `.gemini/templates/spec/requirements-template.md`.
 4.  **Save Document:** Save the generated content to `.gemini/specs/{{args}}/requirements.md` using the `write_file` tool.
-5.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find the line `"phase": "initialized"` and replace it with `"phase": "requirements-generated"`. Also, find `"generated": false` for requirements and replace it with `"generated": true`.
-6.  **Request Approval:** Present the `requirements.md` to the user and ask for approval with the exact question: "Does the `requirements.md` look correct? If so, you can approve it by running `/spec design {{args}}` which will proceed to the next phase."
+5.  **Auto-validate Requirements:** Run an internal validation check to ensure the generated `requirements.md` complies with the EARS format and project standards. Report any major issues.
+6.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{args}}/spec.json`. Find the line `"phase": "initialized"` and replace it with `"phase": "requirements-generated"`. Also, find `"generated": false` for requirements and replace it with `"generated": true`.
+7.  **Request Approval:** Present the `requirements.md` to the user and ask for approval with the exact question: "Does the `requirements.md` look correct? To approve it and proceed to the design phase, please run `/spec design {{args}}`."
 """
