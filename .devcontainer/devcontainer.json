@@ -2,6 +2,7 @@
   "name": "Gemini CLI",
   "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:0-bullseye",
   "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "postCreateCommand": "npm install -g @google/gemini-cli",
