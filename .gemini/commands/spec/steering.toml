@@ -8,7 +8,9 @@ You are an expert AI assistant. Your task is to analyze the current project and 
 ### STEERING DOCUMENT MANAGEMENT
 ---
 **Action:**
-1.  **Analyze Project:** Review the entire codebase, paying special attention to package files (`package.json`, `requirements.txt`, etc.), READMEs, and existing source code structure to infer the project's purpose, technology, and conventions.
+1.  **Analyze Project:** Review the project to infer its purpose, technology, and conventions. Your analysis should include:
+    - **Specifications:** Any `requirements.md` and `design.md` files found within the `.gemini/specs/` subdirectories.
+    - **Codebase:** The entire source code, paying special attention to package files (`package.json`, `requirements.txt`, etc.), READMEs, and the overall directory structure.
 
 2.  **Process Each Steering Document (`product.md`, `tech.md`, `structure.md`):**
     For each document:
