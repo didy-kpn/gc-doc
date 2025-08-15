@@ -9,15 +9,15 @@ Your goal is to write a FAILING test for task `{{task_id}}` based on the test ca
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `.gemini/specs/{{spec_name}}/{{task_id}}.implement.json`. Verify the `phase` is `contract-generated`.
+1.  **Check State:** Read `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `contract-generated`.
 2.  **Handle Approval:** If `approvals.contract.approved` is `false`, ask the user "The CONTRACT phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
 ### PHASE 2: WRITE FAILING TEST
 ---
 **Actions:**
-1.  **Load Context:** Read the contract code and `.gemini/specs/{{spec_name}}/{{task_id}}.testcase.md`.
+1.  **Load Context:** Read the contract code and `.gemini/specs/{{spec_name}}/{{task_id}}/testcase.md`.
 2.  **Write Failing Test:** Choose a specific test case from `testcase.md` and write a unit test that implements it. The test MUST fail.
-3.  **Update State:** Use `replace` to update `.gemini/specs/{{spec_name}}/{{task_id}}.implement.json`. Set `phase` to `red-generated` and `approvals.red.generated` to `true`.
+3.  **Update State:** Use `replace` to update `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `red-generated` and `approvals.red.generated` to `true`.
 4.  **Request Approval:** Present the failing test code. Ask for approval with the exact question: "Does the failing test look correct? To approve and proceed to the GREEN phase, please run `/spec:implement:green {{spec_name}} {{task_id}}`."
 """
