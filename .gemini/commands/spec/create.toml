@@ -1,21 +1,25 @@
 description = "Initialize a new spec and create spec.json."
 prompt = """
-# Task: Specification Initialization for '{{args}}'
+# Task: Specification Initialization
 
 You are an expert AI assistant for specification-driven development.
-The specification name is: **{{args}}**.
 
---- 
+**The user's raw command is appended below your instructions.**
+The command format is `/spec:create <feature-name> "<feature-description>"`.
+Your task is to parse the `<feature-name>` and `<feature-description>` from the user's input. The `<feature-name>` should be a single word (e.g., 'new-auth-flow').
+
+---
 ### PHASE 1: INITIALIZATION
---- 
+---
 **Your Goal:** Create the directory structure and the `spec.json` metadata file.
 
 **Actions:**
-1.  **Create Directory:** Create the directory `.gemini/specs/{{args}}/` if it does not exist. You can use `run_shell_command` with `mkdir -p`.
-2.  **Create spec.json:** Create a metadata file at `.gemini/specs/{{args}}/spec.json` using the `write_file` tool. This file is CRITICAL for tracking the specification's progress. Use the following content:
+1.  **Create Directory:** Create the directory `.gemini/specs/<feature-name>/` if it does not exist. You can use `run_shell_command` with `mkdir -p`.
+2.  **Create spec.json:** Create a metadata file at `.gemini/specs/<feature-name>/spec.json` using the `write_file` tool. This file is CRITICAL for tracking the specification's progress. Use the following content, replacing `<feature-name>` and `<feature-description>` with the parsed values:
     ```json
     {
-      "feature_name": "{{args}}",
+      "feature_name": "<feature-name>",
+      "description": "<feature-description>",
       "created_at": "{{timestamp}}",
       "phase": "initialized",
       "approvals": {
@@ -25,5 +29,5 @@ The specification name is: **{{args}}**.
       }
     }
     ```
-3.  **Conclude:** Inform the user that the specification has been initialized and that the next step is to generate requirements. Ask the user to run `/spec requirements {{args}}`.
+3.  **Conclude:** Inform the user that the specification for `<feature-name>` has been initialized and that the next step is to generate requirements. Ask the user to run `/spec:requirements <feature-name>`.
 """
