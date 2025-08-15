@@ -60,7 +60,10 @@ Gemini CLI 仕様駆動開発ワークフローは、AIアシスタントと協�
 | `/spec requirements <spec-name>`          | プロジェクトのコンテキストとテンプレートに基づいて、詳細な`requirements.md`ファイルを生成します。                                                      |
 | `/spec design <spec-name>`                | あなたが要件を承認した後、包括的な`design.md`技術ドキュメントを生成します。                                           |
 | `/spec tasks <spec-name>`                 | あなたが設計を承認した後、`tasks.md`内にアトミックで実行可能なコーディングタスクのリストを生成します。                                          |
-| `/spec implement <spec-name> <task-id>`   | `tasks.md`の単一タスクをテスト駆動開発（TDD）アプローチを使用して実装するのをガイドします。                            |
+| `/spec implement-contract <spec-name> <task-id>` | フェーズ1: API契約を実装し、タスクの`testcase.md`ファイルを生成します。 |
+| `/spec implement-red <spec-name> <task-id>`      | フェーズ2: テストケースに基づいて失敗するテストを作成します（Red）。 |
+| `/spec implement-green <spec-name> <task-id>`    | フェーズ3: テストをパスさせるための最小限のコードを記述します（Green）。 |
+| `/spec implement-refactor <spec-name> <task-id>` | フェーズ4: コードをリファクタリングし、タスクを完了させてクリーンアップします。 |
 | `/spec status <spec-name>`                | 仕様の現在の進捗状況（完了したフェーズやタスクの完了率など）を表示します。                   |
 | `/spec steering`                          | プロジェクト全体のコンテキストを提供するコアステアリングドキュメント（`product.md`、`tech.md`、`structure.md`）を賢く作成または更新します。 |
 

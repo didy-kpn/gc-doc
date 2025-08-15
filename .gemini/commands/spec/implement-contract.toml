@@ -1,0 +1,40 @@
+description = "Phase 1 (Contract): Implement types/contracts and create test cases."
+prompt = """
+# Task: Implement (CONTRACT) - {{spec_name}} / Task {{task_id}}
+
+You are an expert AI system architect.
+Your goal is to implement the data structures, types, and API contracts for task `{{task_id}}`, and then to create a comprehensive set of test cases in a markdown file.
+
+---
+### PHASE 1: SETUP & INITIALIZATION
+---
+**Actions:**
+1.  **Load Context:** Read `.gemini/specs/{{spec_name}}/design.md` and `.gemini/specs/{{spec_name}}/tasks.md`.
+2.  **Initialize State File:**
+    a. Check if `.gemini/specs/{{spec_name}}/{{task_id}}.implement.json` exists.
+    b. If it does NOT exist, create it using the `write_file` tool with the following content. This file is CRITICAL for tracking the implementation progress of this task.
+    ```json
+    {
+      "spec_name": "{{spec_name}}",
+      "task_id": "{{task_id}}",
+      "phase": "pending-contract",
+      "approvals": {
+        "contract": { "generated": false, "approved": false },
+        "red": { "generated": false, "approved": false },
+        "green": { "generated": false, "approved": false },
+        "refactor": { "generated": false, "approved": false }
+      }
+    }
+    ```
+    c. If it already exists, ensure it's in a valid state to start this phase.
+
+---
+### PHASE 2: IMPLEMENT CONTRACT & GENERATE TEST CASES
+---
+**Actions:**
+1.  **Implement Types & Contracts:** Based on `design.md`, write the actual source code for data models, interfaces, function signatures, and any other type or contract definitions.
+2.  **Generate Test Cases Document:** Create a detailed list of test cases covering success paths, edge cases, and error paths. Use a clear format like Given/When/Then.
+3.  **Save Test Cases:** Save the test cases to a new file: `.gemini/specs/{{spec_name}}/{{task_id}}.testcase.md`.
+4.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{spec_name}}/{{task_id}}.implement.json`. Set `phase` to `contract-generated` and `approvals.contract.generated` to `true`.
+5.  **Request Approval:** Present the implemented contract code and the `testcase.md`. Ask for approval with the exact question: "Does the contract implementation and test case document look correct? To approve and proceed to the RED phase, please run `/spec:implement:red {{spec_name}} {{task_id}}`."
+"""

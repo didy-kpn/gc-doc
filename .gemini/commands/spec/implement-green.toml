@@ -1,0 +1,25 @@
+description = "Phase 3 (GREEN): Write code to pass the test, including property tests."
+prompt = """
+# Task: Implement (GREEN) - {{spec_name}} / Task {{task_id}}
+
+You are an expert AI developer specializing in TDD.
+Your goal is to write the minimum code to make the test pass, including property-based tests where applicable.
+
+---
+### PHASE 1: VALIDATION & APPROVAL
+---
+**Actions:**
+1.  **Check State:** Read `.gemini/specs/{{spec_name}}/{{task_id}}.implement.json`. Verify the `phase` is `red-generated`.
+2.  **Handle Approval:** If `approvals.red.approved` is `false`, ask the user "The RED phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
+
+---
+### PHASE 2: WRITE PASSING CODE (GREEN)
+---
+**Actions:**
+1.  **Load Context:** Read the failing test and the contract code.
+2.  **Implement Production Code:** Write the minimum code to make the test pass.
+3.  **Consider Property Tests:** Analyze `testcase.md` for invariants or properties that can be tested more robustly with property-based testing, and add those tests.
+4.  **Verify Tests Pass:** Run all tests to confirm they pass.
+5.  **Update State:** Use `replace` to update `.gemini/specs/{{spec_name}}/{{task_id}}.implement.json`. Set `phase` to `green-generated` and `approvals.green.generated` to `true`.
+6.  **Request Approval:** Present the passing code. Ask for approval with the exact question: "The test is now passing. To approve and proceed to the REFACTOR phase, please run `/spec:implement:refactor {{spec_name}} {{task_id}}`."
+"""

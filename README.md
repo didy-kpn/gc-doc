@@ -62,7 +62,10 @@ The workflow follows a sequence of commands. You must run them in the specified 
 | `/spec requirements <spec-name>`          | Generates a detailed `requirements.md` file based on project context and templates.                                                      |
 | `/spec design <spec-name>`                | Generates a comprehensive `design.md` technical document after you approve the requirements.                                           |
 | `/spec tasks <spec-name>`                 | Generates a list of atomic, executable coding tasks in `tasks.md` after you approve the design.                                          |
-| `/spec implement <spec-name> <task-id>`   | Guides you through implementing a single task from `tasks.md` using a Test-Driven Development (TDD) approach.                            |
+| `/spec implement-contract <spec-name> <task-id>` | Phase 1: Implements API contracts and generates a `testcase.md` file for a task.                                                         |
+| `/spec implement-red <spec-name> <task-id>`      | Phase 2: Creates a failing test based on the test cases (Red).                                                                           |
+| `/spec implement-green <spec-name> <task-id>`    | Phase 3: Writes the minimum code to make the test pass (Green).                                                                          |
+| `/spec implement-refactor <spec-name> <task-id>` | Phase 4: Refactors the code, finalizes the task, and performs cleanup.                                                                   |
 | `/spec status <spec-name>`                | Shows the current progress of a specification, including which phases are complete and the task completion percentage.                   |
 | `/spec steering`                          | Intelligently creates or updates the core steering documents (`product.md`, `tech.md`, `structure.md`) that provide project-wide context. |
 

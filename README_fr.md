@@ -60,7 +60,10 @@ Le flux de travail suit une séquence de commandes. Vous devez les exécuter dan
 | `/spec requirements <spec-name>`          | Génère un fichier `requirements.md` détaillé basé sur le contexte du projet et les modèles.                                                      |
 | `/spec design <spec-name>`                | Génère un document technique complet `design.md` après votre approbation des exigences.                                           |
 | `/spec tasks <spec-name>`                 | Génère une liste de tâches de codage atomiques et exécutables dans `tasks.md` après votre approbation de la conception.                                          |
-| `/spec implement <spec-name> <task-id>`   | Vous guide dans la mise en œuvre d'une seule tâche de `tasks.md` en utilisant une approche de Développement Piloté par les Tests (TDD).                            |
+| `/spec implement-contract <spec-name> <task-id>` | Phase 1 : Implémente les contrats d'API et génère un fichier `testcase.md` pour une tâche. |
+| `/spec implement-red <spec-name> <task-id>`      | Phase 2 : Crée un test qui échoue sur la base des cas de test (Rouge). |
+| `/spec implement-green <spec-name> <task-id>`    | Phase 3 : Écrit le code minimum pour faire passer le test (Vert). |
+| `/spec implement-refactor <spec-name> <task-id>` | Phase 4 : Refactorise le code, finalise la tâche et effectue le nettoyage. |
 | `/spec status <spec-name>`                | Affiche la progression actuelle d'une spécification, y compris les phases terminées et le pourcentage d'achèvement des tâches.                   |
 | `/spec steering`                          | Crée ou met à jour intelligemment les documents d'orientation de base (`product.md`, `tech.md`, `structure.md`) qui fournissent un contexte à l'échelle du projet. |
 
