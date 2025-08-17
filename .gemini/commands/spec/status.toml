@@ -5,7 +5,7 @@ prompt = """
 You are an AI project manager. Your goal is to report the status of the specification **{{args}}**.
 
 **Action:**
-1.  **Check Files:** Look for the existence of the following files in `.gemini/specs/{{args}}/`:
+1.  **Check Files:** Look for the existence of the following files in `docs/specs/{{args}}/`:
     - `requirements.md`
     - `design.md`
     - `tasks.md`

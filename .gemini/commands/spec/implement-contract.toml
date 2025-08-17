@@ -9,10 +9,10 @@ Your goal is to implement the data structures, types, and API contracts for task
 ### PHASE 1: SETUP & INITIALIZATION
 ---
 **Actions:**
-1.  **Load Context:** Read `.gemini/specs/{{spec_name}}/design.md` and `.gemini/specs/{{spec_name}}/tasks.md`.
-2.  **Create Task Directory:** Create the directory `.gemini/specs/{{spec_name}}/{{task_id}}/` if it does not exist.
+1.  **Load Context:** Read `docs/specs/{{spec_name}}/design.md` and `docs/specs/{{spec_name}}/tasks.md`.
+2.  **Create Task Directory:** Create the directory `docs/specs/{{spec_name}}/{{task_id}}/` if it does not exist.
 3.  **Initialize State File:**
-    a. Check if `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json` exists.
+    a. Check if `docs/specs/{{spec_name}}/{{task_id}}/implement.json` exists.
     b. If it does NOT exist, create it using the `write_file` tool with the following content. This file is CRITICAL for tracking the implementation progress of this task.
     ```json
     {
@@ -35,7 +35,7 @@ Your goal is to implement the data structures, types, and API contracts for task
 **Actions:**
 1.  **Implement Types & Contracts:** Based on `design.md`, write the actual source code for data models, interfaces, function signatures, and any other type or contract definitions.
 2.  **Generate Test Cases Document:** Create a detailed list of test cases covering success paths, edge cases, and error paths. Use a clear markdown format for each test case, including a "Test Name" (a descriptive name for what is being tested), "Test Purpose", and the steps in Given/When/Then format.
-3.  **Save Test Cases:** Save the test cases to a new file: `.gemini/specs/{{spec_name}}/{{task_id}}/testcase.md`.
-4.  **Update State:** Use the `replace` tool to update `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `contract-generated` and `approvals.contract.generated` to `true`.
+3.  **Save Test Cases:** Save the test cases to a new file: `docs/specs/{{spec_name}}/{{task_id}}/testcase.md`.
+4.  **Update State:** Use the `replace` tool to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `contract-generated` and `approvals.contract.generated` to `true`.
 5.  **Request Approval:** Present the implemented contract code and the `testcase.md`. Ask for approval with the exact question: "Does the contract implementation and test case document look correct? To approve and proceed to the RED phase, please run `/spec:implement:red {{spec_name}} {{task_id}}`."
 """
