@@ -26,7 +26,7 @@ You are an expert AI system architect. Your goal is to create a comprehensive te
 **Actions:**
 1.  **Load Context:**
     - Read the approved `docs/specs/{{args}}/requirements.md`.
-    - Read all steering documents from `.gemini/steering/*.md` (`tech.md`, `structure.md`).
+    - Read all steering documents from `docs/steering/*.md` (`tech.md`, `structure.md`).
 2.  **Analyze Codebase (MANDATORY):**
     - Conduct a deep analysis of the existing codebase. Identify reusable patterns, components, and utilities. Document how the new design will integrate with or extend existing code.
 3.  **Generate Document:** Create the content for `design.md` using the template from `.gemini/templates/spec/design-template.md`. Ensure every requirement from `requirements.md` is addressed in the design.
