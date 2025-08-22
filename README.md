@@ -35,6 +35,10 @@ The workflow follows a sequence of commands. You must run them in the specified 
     - Run `/spec create <spec-name>`
     - This creates a dedicated directory and a `spec.json` file to track the progress of your new feature.
 
+3.  **Generate User Manual Draft**
+    - Run `/spec user-doc <spec-name>`
+    - The AI generates a `user-doc.diff` file, which contains a draft for the user manual section for the new feature.
+
 3.  **Define Requirements**
     - Run `/spec requirements <spec-name>`
     - The AI generates a `requirements.md` file, detailing user stories and acceptance criteria in EARS format.
@@ -54,11 +58,16 @@ The workflow follows a sequence of commands. You must run them in the specified 
 7.  **Check Progress**
     - At any time, run `/spec status <spec-name>` to see the current status of your specification.
 
+8.  **Apply to Steering Documents**
+    - After all tasks for a feature are complete, run `/spec steering-apply <spec-name>`
+    - This integrates the new feature's documentation into the project's core steering documents.
+
 ### Commands
 
 | Command                                   | Description                                                                                                                              |
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `/spec create <spec-name>`                | Initializes a new specification. Creates the spec directory and the `spec.json` tracking file.                                           |
+| `/spec user-doc <spec-name>`              | Creates a diff file (`user-doc.diff`) to update the user manual based on the feature's description.                                      |
 | `/spec requirements <spec-name>`          | Generates a detailed `requirements.md` file based on project context and templates.                                                      |
 | `/spec design <spec-name>`                | Generates a comprehensive `design.md` technical document after you approve the requirements.                                           |
 | `/spec tasks <spec-name>`                 | Generates a list of atomic, executable coding tasks in `tasks.md` after you approve the design.                                          |
@@ -68,6 +77,7 @@ The workflow follows a sequence of commands. You must run them in the specified 
 | `/spec implement-refactor <spec-name> <task-id>` | Phase 4: Refactors the code, finalizes the task, and performs cleanup.                                                                   |
 | `/spec status <spec-name>`                | Shows the current progress of a specification, including which phases are complete and the task completion percentage.                   |
 | `/spec steering`                          | Intelligently creates or updates the core steering documents (`product.md`, `tech.md`, `structure.md`) that provide project-wide context. |
+| `/spec steering-apply <spec-name>`        | Applies the artifacts of a completed feature to the steering documents.                                                                  |
 
 ---
 

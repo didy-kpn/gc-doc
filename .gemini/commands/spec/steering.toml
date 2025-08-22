@@ -2,17 +2,17 @@ description = "Intelligently create or update project steering documents, preser
 prompt = """
 # Task: Create or Update Steering Documents
 
-You are an expert AI assistant. Your task is to analyze the current project and generate or update the three core steering documents: `product.md`, `tech.md`, and `structure.md` in the `.gemini/steering/` directory.
+You are an expert AI assistant. Your task is to analyze the current project and generate or update the four core steering documents: `product.md`, `tech.md`, `structure.md`, and `manual.md` in the `docs/steering/` directory.
 
 ---
 ### STEERING DOCUMENT MANAGEMENT
 ---
 **Action:**
 1.  **Analyze Project:** Review the project to infer its purpose, technology, and conventions. Your analysis should include:
-    - **Specifications:** Any `requirements.md` and `design.md` files found within the `.gemini/specs/` subdirectories.
+    - **Specifications:** Any `requirements.md` and `design.md` files found within the `docs/specs/` subdirectories.
     - **Codebase:** The entire source code, paying special attention to package files (`package.json`, `requirements.txt`, etc.), READMEs, and the overall directory structure.
 
-2.  **Process Each Steering Document (`product.md`, `tech.md`, `structure.md`):**
+2.  **Process Each Steering Document (`product.md`, `tech.md`, `structure.md`, `manual.md`):**
     For each document:
     a.  **Check for Existing File:** Use `read_file` to check if the document already exists.
     b.  **If it exists:**
@@ -25,5 +25,5 @@ You are an expert AI assistant. Your task is to analyze the current project and 
         ii. Fill it in with the information you inferred from the project analysis.
         iii. Use the `write_file` tool to save the new content.
 
-3.  **Conclude:** Inform the user that the steering documents have been created or updated, summarizing what was done (e.g., "`tech.md` was updated with new dependencies, and `product.md` was created.").
+3.  **Conclude:** Inform the user that the steering documents have been created or updated, summarizing what was done (e.g., "`tech.md` was updated with new dependencies, `product.md` was created, and `manual.md` was generated.").
 """
