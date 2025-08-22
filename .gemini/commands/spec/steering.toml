@@ -2,7 +2,7 @@ description = "Intelligently create or update project steering documents, preser
 prompt = """
 # Task: Create or Update Steering Documents
 
-You are an expert AI assistant. Your task is to analyze the current project and generate or update the three core steering documents: `product.md`, `tech.md`, and `structure.md` in the `docs/steering/` directory.
+You are an expert AI assistant. Your task is to analyze the current project and generate or update the three core steering documents: `product.md`, `tech.md`, and `structure.md` in the `.gemini/steering/` directory.
 
 ---
 ### STEERING DOCUMENT MANAGEMENT
