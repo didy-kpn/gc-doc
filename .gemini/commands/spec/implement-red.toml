@@ -1,23 +1,55 @@
-description = "Phase 2 (RED): Write a failing test based on the generated test cases."
+description = "TDD RED phase: Write failing tests based on generated test cases."
 prompt = """
-# Task: Implement (RED) - {{spec_name}} / Task {{task_id}}
+# Task: TDD RED Phase - {{spec_name}} / Task {{task_id}}
 
-You are an expert AI developer specializing in TDD.
-Your goal is to write a FAILING test for task `{{task_id}}` based on the test cases defined in the `contract` phase.
+You are an expert AI developer specializing in test-driven development.
+Your goal is to implement FAILING tests for task `{{task_id}}` based on the comprehensive test cases defined in the testcase phase.
 
 ---
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `contract-generated`.
-2.  **Handle Approval:** If `approvals.contract.approved` is `false`, ask the user "The CONTRACT phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
+1.  **Check State:** Read `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `testcase-generated`.
+2.  **Handle Approval:** If `approvals.testcase.approved` is `false`, ask the user "The TESTCASE phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
-### PHASE 2: WRITE FAILING TEST
+### PHASE 2: IMPLEMENT FAILING TESTS
 ---
 **Actions:**
-1.  **Load Context:** Read the contract code and `.gemini/specs/{{spec_name}}/{{task_id}}/testcase.md`.
-2.  **Write Failing Test:** Choose a specific test case from `testcase.md` and write a unit test that implements it. The test MUST fail.
-3.  **Update State:** Use `replace` to update `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `red-generated` and `approvals.red.generated` to `true`.
-4.  **Request Approval:** Present the failing test code. Ask for approval with the exact question: "Does the failing test look correct? To approve and proceed to the GREEN phase, please run `/spec:implement:green {{spec_name}} {{task_id}}`."
+1.  **Load Context:**
+    - Read the test cases from `docs/specs/{{spec_name}}/{{task_id}}/testcase_todo.md`
+    - Load the defined types and interfaces from the define phase
+    - Review the technical design for implementation context
+
+2.  **Select Test Cases for Implementation:**
+    - Choose 2-3 representative test cases from each category (unit, property, system)
+    - Prioritize the most critical and foundational test cases
+    - Focus on tests that will drive the core implementation
+
+3.  **Implement Unit Tests:**
+    - Convert Gherkin scenarios into executable unit tests
+    - Use appropriate testing framework for the project
+    - Ensure tests are well-structured and readable
+    - Tests MUST fail initially (no implementation exists yet)
+
+4.  **Implement Property Tests:**
+    - Convert property specifications into property-based tests
+    - Use appropriate property testing library (e.g., QuickCheck, Hypothesis, JSVerify)
+    - Define generators for test data
+    - Tests MUST fail due to missing implementation
+
+5.  **Implement Integration/System Tests:**
+    - Convert end-to-end scenarios into executable integration tests
+    - Set up necessary test fixtures and mocks
+    - Focus on critical user workflows
+    - Tests MUST fail due to incomplete system
+
+6.  **Verify Test Failures:**
+    - Run all implemented tests to confirm they fail appropriately
+    - Ensure failure messages are clear and descriptive
+    - Document the expected failure reasons
+
+7.  **Update State:** Use `replace` to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `fail-generated` and `approvals.fail.generated` to `true`.
+
+8.  **Request Approval:** Present the failing tests and their failure output. Ask for approval with the exact question: "Do the failing tests correctly represent the expected behavior? To approve and proceed to the TDD GREEN phase, please run `/doc:pass {{spec_name}} {{task_id}}`."
 """

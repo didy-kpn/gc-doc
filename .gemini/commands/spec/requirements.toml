@@ -7,11 +7,11 @@ You are an expert AI business analyst. Your goal is to generate a comprehensive 
 ---
 ### PHASE 1: VALIDATION
 ---
-**Your Goal:** Ensure the specification has been initialized.
+**Your Goal:** Ensure the specification has been initialized and user manual diff created (if applicable).
 
 **Actions:**
 1.  **Check State:** Read the metadata file at `docs/specs/{{args}}/spec.json`.
-2.  **Verify Phase:** Confirm that the `"phase"` is `"initialized"`. If not, inform the user to run `/spec:create {{args}} "<description>"` first and stop.
+2.  **Verify Phase:** Confirm that the `"phase"` is `"initialized"` or `"manual-generated"`. If not, inform the user to run `/doc:create {{args}} "<description>"` first and stop.
 
 ---
 ### PHASE 2: REQUIREMENTS GENERATION
@@ -21,11 +21,12 @@ You are an expert AI business analyst. Your goal is to generate a comprehensive 
 **Actions:**
 1.  **Load Context:**
     - Read the `spec.json` file at `docs/specs/{{args}}/spec.json` and extract the value of the `description` key. This description is the primary source for the requirements.
-    - Read all steering documents from `.gemini/steering/*.md` to understand project standards, especially `product.md`.
+    - Read all steering documents from `docs/steering/*.md` to understand project standards, especially `product.md`.
+    - If exists, read `docs/specs/{{args}}/user-doc.diff` to understand user-facing aspects.
     - Perform a high-level search of the codebase for features or components related to '{{args}}' to understand existing context.
 2.  **Generate Document:** Based on the feature description from `spec.json`, create the content for `requirements.md` by loading and populating the template from `.gemini/templates/spec/requirements-template.md`. Ensure all functional and non-functional requirements are considered and acceptance criteria use the EARS format.
 3.  **Save Document:** Save the generated content to `docs/specs/{{args}}/requirements.md` using the `write_file` tool.
 4.  **Auto-validate Requirements:** Run an internal validation check to ensure the generated `requirements.md` complies with the EARS format and project standards. Report any major issues.
-5.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/spec.json`. Find the line `"phase": "initialized"` and replace it with `"phase": "requirements-generated"`. Also, find `"generated": false` for requirements and replace it with `"generated": true`.
-6.  **Request Approval:** Present the `requirements.md` to the user and ask for approval with the exact question: "Does the `requirements.md` look correct? To approve it and proceed to the design phase, please run `/spec:design {{args}}`."
+5.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/spec.json`. Find the line `"phase": "initialized"` or `"phase": "manual-generated"` and replace it with `"phase": "requirements-generated"`. Also, find `"generated": false` for requirements and replace it with `"generated": true`.
+6.  **Request Approval:** Present the `requirements.md` to the user and ask for approval with the exact question: "Does the `requirements.md` look correct? To approve it and proceed to the design phase, please run `/doc:design {{args}}`."
 """

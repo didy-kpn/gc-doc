@@ -1,41 +1,65 @@
-description = "Phase 1 (Contract): Implement types/contracts and create test cases."
+description = "Define types, interfaces, and function signatures for a task."
 prompt = """
-# Task: Implement (CONTRACT) - {{spec_name}} / Task {{task_id}}
+# Task: Define Types and Interfaces - {{spec_name}} / Task {{task_id}}
 
-You are an expert AI system architect.
-Your goal is to implement the data structures, types, and API contracts for task `{{task_id}}`, and then to create a comprehensive set of test cases in a markdown file.
+You are an expert AI system architect specializing in type-driven development.
+Your goal is to define comprehensive type definitions, interfaces, and function signatures for task `{{task_id}}` based on the domain modeling in the design document.
 
 ---
-### PHASE 1: SETUP & INITIALIZATION
+### PHASE 1: SETUP & VALIDATION
 ---
 **Actions:**
 1.  **Load Context:** Read `docs/specs/{{spec_name}}/design.md` and `docs/specs/{{spec_name}}/tasks.md`.
-2.  **Create Task Directory:** Create the directory `docs/specs/{{spec_name}}/{{task_id}}/` if it does not exist.
-3.  **Initialize State File:**
+2.  **Validate Task:** Ensure the specified task exists and is ready for implementation.
+3.  **Create Task Directory:** Create the directory `docs/specs/{{spec_name}}/{{task_id}}/` if it does not exist.
+4.  **Initialize State File:**
     a. Check if `docs/specs/{{spec_name}}/{{task_id}}/implement.json` exists.
-    b. If it does NOT exist, create it using the `write_file` tool with the following content. This file is CRITICAL for tracking the implementation progress of this task.
+    b. If it does NOT exist, create it using the `write_file` tool with the following content:
     ```json
     {
       "spec_name": "{{spec_name}}",
       "task_id": "{{task_id}}",
-      "phase": "pending-contract",
+      "phase": "pending-define",
       "approvals": {
-        "contract": { "generated": false, "approved": false },
-        "red": { "generated": false, "approved": false },
-        "green": { "generated": false, "approved": false },
-        "refactor": { "generated": false, "approved": false }
+        "define": { "generated": false, "approved": false },
+        "testcase": { "generated": false, "approved": false },
+        "fail": { "generated": false, "approved": false },
+        "pass": { "generated": false, "approved": false },
+        "improve": { "generated": false, "approved": false }
       }
     }
     ```
     c. If it already exists, ensure it's in a valid state to start this phase.
 
 ---
-### PHASE 2: IMPLEMENT CONTRACT & GENERATE TEST CASES
+### PHASE 2: TYPE DEFINITION & INTERFACE DESIGN
 ---
 **Actions:**
-1.  **Implement Types & Contracts:** Based on `design.md`, write the actual source code for data models, interfaces, function signatures, and any other type or contract definitions.
-2.  **Generate Test Cases Document:** Create a detailed list of test cases covering success paths, edge cases, and error paths. Use a clear markdown format for each test case, including a "Test Name" (a descriptive name for what is being tested), "Test Purpose", and the steps in Given/When/Then format.
-3.  **Save Test Cases:** Save the test cases to a new file: `docs/specs/{{spec_name}}/{{task_id}}/testcase.md`.
-4.  **Update State:** Use the `replace` tool to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `contract-generated` and `approvals.contract.generated` to `true`.
-5.  **Request Approval:** Present the implemented contract code and the `testcase.md`. Ask for approval with the exact question: "Does the contract implementation and test case document look correct? To approve and proceed to the RED phase, please run `/spec:implement:red {{spec_name}} {{task_id}}`."
+1.  **Extract Domain Model:** From the design document, extract all relevant types, data structures, and constraints for this specific task.
+
+2.  **Define Core Types:**
+    - Create comprehensive type definitions (interfaces, enums, union types)
+    - Include all data validation constraints and business rules
+    - Define error types and exception hierarchies
+    - Create configuration and options types
+
+3.  **Define Function Signatures:**
+    - Create function signatures for all public interfaces
+    - Include parameter types, return types, and error conditions
+    - Document pre-conditions and post-conditions
+    - Define callback and event handler signatures (if applicable)
+
+4.  **Create Interface Contracts:**
+    - Define abstract interfaces for external dependencies
+    - Create service interface definitions
+    - Define protocol and communication interfaces
+    - Include async/await patterns where applicable
+
+5.  **Generate Documentation:** Create comprehensive type documentation with examples and usage patterns.
+
+6.  **Save Definitions:** Save all type definitions, interfaces, and signatures to appropriate source files as specified in the task.
+
+7.  **Update State:** Use the `replace` tool to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `define-generated` and `approvals.define.generated` to `true`.
+
+8.  **Request Approval:** Present the implemented type definitions and interfaces. Ask for approval with the exact question: "Do the type definitions, interfaces, and function signatures look correct and complete? To approve and proceed to testcase generation, please run `/doc:testcase {{spec_name}} {{task_id}}`."
 """

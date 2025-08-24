@@ -1,25 +1,72 @@
-description = "Phase 4 (REFACTOR): Refactor the code and tests for quality."
+description = "TDD REFACTOR phase: Improve code quality while maintaining passing tests."
 prompt = """
-# Task: Implement (REFACTOR) - {{spec_name}} / Task {{task_id}}
+# Task: TDD REFACTOR Phase - {{spec_name}} / Task {{task_id}}
 
-You are an expert AI developer specializing in software craftsmanship.
-Your goal is to refactor the code for task `{{task_id}}` for quality, clarity, and performance.
+You are an expert AI developer specializing in software craftsmanship and refactoring.
+Your goal is to improve the code quality for task `{{task_id}}` while ensuring all tests continue to pass.
 
 ---
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `green-generated`.
-2.  **Handle Approval:** If `approvals.green.approved` is `false`, ask the user "The GREEN phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
+1.  **Check State:** Read `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `pass-generated`.
+2.  **Handle Approval:** If `approvals.pass.approved` is `false`, ask the user "The PASS phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
-### PHASE 2: REFACTOR & FINALIZE
+### PHASE 2: REFACTOR & IMPROVE CODE QUALITY
 ---
 **Actions:**
-1.  **Load Context:** Read the test and production code.
-2.  **Refactor:** Refactor both production and test code for clarity, efficiency, and adherence to project conventions.
-3.  **Verify Tests Still Pass:** Run all tests to ensure no functionality was broken.
-4.  **Mark Task as Complete:** Use `replace` to edit `.gemini/specs/{{spec_name}}/tasks.md`. Find the line for task `{{task_id}}` and change its checkbox from `- [ ]` to `- [x]`.
-5.  **Cleanup:** Delete the temporary state file `.gemini/specs/{{spec_name}}/{{task_id}}/implement.json` and the test case file `.gemini/specs/{{spec_name}}/{{task_id}}/testcase.md`. Finally, remove the empty task directory itself.
-6.  **Conclude:** Present the final, refactored code. Inform the user that task `{{task_id}}` is complete and marked as such. Suggest the next logical step.
+1.  **Load Context:**
+    - Review the current implementation and passing tests
+    - Read the design document for architectural guidance
+    - Review steering documents for coding standards and patterns
+
+2.  **Apply Code Quality Improvements:**
+    - **Extract Functions:** Break down large functions into smaller, focused ones
+    - **Remove Duplication:** Identify and eliminate repeated code
+    - **Improve Naming:** Use clear, descriptive names for variables and functions
+    - **Enhance Readability:** Add comments and improve code structure
+    - **Optimize Performance:** Apply performance optimizations where beneficial
+
+3.  **Follow Design Patterns:**
+    - Implement appropriate design patterns from the technical design
+    - Ensure code follows SOLID principles
+    - Apply domain-driven design patterns where applicable
+    - Maintain separation of concerns
+
+4.  **Enhance Error Handling:**
+    - Improve error messages and error handling logic
+    - Add proper validation and guard clauses
+    - Implement graceful degradation where appropriate
+    - Ensure proper resource cleanup
+
+5.  **Add Comprehensive Documentation:**
+    - Add detailed function and class documentation
+    - Include usage examples and edge cases
+    - Document any complex algorithms or business logic
+    - Add inline comments for non-obvious code sections
+
+6.  **Verify Tests Still Pass:**
+    - Run all tests after each refactoring step
+    - Ensure no functionality was broken during refactoring
+    - Add any additional tests if new edge cases were discovered
+
+7.  **Performance and Security Review:**
+    - Review code for potential performance bottlenecks
+    - Check for security vulnerabilities
+    - Ensure proper input validation and sanitization
+    - Optimize resource usage where applicable
+
+8.  **Mark Task as Complete:**
+    - Use `replace` to edit `docs/specs/{{spec_name}}/tasks.md`
+    - Find the line for task `{{task_id}}` and change its checkbox from `- [ ]` to `- [x]`
+
+9.  **Cleanup Task Directory:**
+    - Delete the temporary state file `docs/specs/{{spec_name}}/{{task_id}}/implement.json`
+    - Delete the test case file `docs/specs/{{spec_name}}/{{task_id}}/testcase_todo.md`
+    - Remove the empty task directory `docs/specs/{{spec_name}}/{{task_id}}/`
+
+10. **Update Global State:** Use `replace` to update `docs/specs/{{spec_name}}/spec.json` and increment completed task counters.
+
+11. **Conclude:** Present the final, refactored code with improvements summary. Inform the user that task `{{task_id}}` is complete and marked as such. Check if all tasks are complete and suggest either the next task implementation or running `/doc:apply {{spec_name}}` if all tasks are finished.
 """

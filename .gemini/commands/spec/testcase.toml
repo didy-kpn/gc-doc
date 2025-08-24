@@ -1,0 +1,85 @@
+description = "Generate comprehensive test cases in Gherkin format with property tests."
+prompt = """
+# Task: Generate Test Cases - {{spec_name}} / Task {{task_id}}
+
+You are an expert AI test architect specializing in behavior-driven development and property-based testing.
+Your goal is to create comprehensive test cases covering unit tests, property tests, and system tests for task `{{task_id}}`.
+
+---
+### PHASE 1: VALIDATION & APPROVAL
+---
+**Actions:**
+1.  **Check State:** Read `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `define-generated`.
+2.  **Handle Approval:** If `approvals.define.approved` is `false`, ask the user "The DEFINE phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
+
+---
+### PHASE 2: COMPREHENSIVE TEST CASE GENERATION
+---
+**Actions:**
+1.  **Load Context:**
+    - Read `docs/specs/{{spec_name}}/design.md` for technical specifications
+    - Read `docs/specs/{{spec_name}}/requirements.md` for acceptance criteria
+    - Read `docs/specs/{{spec_name}}/user-doc.diff` (if exists) for user-facing behavior
+    - Load the defined types and interfaces from the previous phase
+
+2.  **Generate Unit Tests (Gherkin Format):**
+    Based on technical design, create unit test scenarios:
+    ```gherkin
+    Feature: [Component Name] Unit Tests
+    
+    Scenario: [Specific behavior test]
+      Given [initial conditions]
+      When [action is performed]
+      Then [expected outcome]
+      And [additional assertions]
+    ```
+
+3.  **Generate Property Tests:**
+    Based on type specifications and invariants:
+    ```gherkin
+    Feature: [Type/Function] Property Tests
+    
+    Scenario: [Property invariant test]
+      Given [any valid input in domain]
+      When [function is applied]
+      Then [invariant must hold]
+      
+    Examples:
+      | property | description |
+      | idempotency | f(f(x)) = f(x) |
+      | commutativity | f(a,b) = f(b,a) |
+    ```
+
+4.  **Generate System/Integration Tests (Gherkin Format):**
+    Based on requirements and user manual:
+    ```gherkin
+    Feature: [End-to-end behavior]
+    
+    Scenario: [User workflow test]
+      Given [system is in state X]
+      When [user performs action Y]
+      Then [system should respond with Z]
+      And [side effects should occur]
+    ```
+
+5.  **Include Edge Cases and Error Scenarios:**
+    ```gherkin
+    Feature: Error Handling
+    
+    Scenario: [Error condition]
+      Given [error condition setup]
+      When [triggering action]
+      Then [appropriate error should be thrown]
+      And [error message should be descriptive]
+    ```
+
+6.  **Save Test Cases:** Save all test cases to `docs/specs/{{spec_name}}/{{task_id}}/testcase_todo.md` using structured Gherkin format with clear sections for:
+    - Unit Tests
+    - Property Tests  
+    - Integration/System Tests
+    - Error/Edge Case Tests
+
+7.  **Update State:** Use `replace` to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `testcase-generated` and `approvals.testcase.generated` to `true`.
+
+8.  **Request Approval:** Present the comprehensive test cases. Ask for approval with the exact question: "Do the test cases cover all scenarios comprehensively? To approve and proceed to the TDD RED phase, please run `/doc:fail {{spec_name}} {{task_id}}`."
+"""

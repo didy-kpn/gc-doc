@@ -2,19 +2,37 @@ description = "Show the current status of a specification."
 prompt = """
 # Task: Report Specification Status for '{{args}}'
 
-You are an AI project manager. Your goal is to report the status of the specification **{{args}}**.
+You are an AI project manager. Your goal is to report the status of the specification **{{args}}** in the document-driven development workflow.
 
 **Action:**
 1.  **Check Files:** Look for the existence of the following files in `docs/specs/{{args}}/`:
+    - `spec.json` (metadata)
+    - `user-doc.diff` (user manual diff)
     - `requirements.md`
     - `design.md`
     - `tasks.md`
-2.  **Analyze `tasks.md`:** If `tasks.md` exists, read its content and count the number of total tasks (`- [ ]` or `- [x]`) and completed tasks (`- [x]`).
-3.  **Report Status:** Present a summary to the user:
+2.  **Read State:** If `spec.json` exists, read it to understand the current phase and approval status.
+3.  **Analyze `tasks.md`:** If `tasks.md` exists, read its content and count the number of total tasks (`- [ ]` or `- [x]`) and completed tasks (`- [x]`).
+4.  **Report Status:** Present a comprehensive summary to the user:
     - **Specification:** {{args}}
-    - **Requirements:** [✅ Found / ❌ Not Found]
-    - **Design:** [✅ Found / ❌ Not Found]
-    - **Tasks:** [✅ Found / ❌ Not Found]
-    - **Implementation Progress:** [X/Y tasks complete (Z%)] (if tasks.md exists)
-    - **Next Step:** [Suggest the next logical command, e.g., "Run `/spec design {{args}}`", or "Run `/spec implement {{args}} ...`"]
+    - **Current Phase:** [from spec.json phase field]
+    - **User Manual Diff:** [✅ Found / ❌ Not Found / ⚠️ Not Applicable]
+    - **Requirements:** [✅ Found / ❌ Not Found] [✅ Approved / ⏳ Pending / ❌ Not Approved]
+    - **Design:** [✅ Found / ❌ Not Found] [✅ Approved / ⏳ Pending / ❌ Not Approved]
+    - **Tasks:** [✅ Found / ❌ Not Found] [✅ Approved / ⏳ Pending / ❌ Not Approved]
+    - **Implementation Progress:**
+      - Define Phase: [✅ Complete / ⏳ In Progress / ❌ Not Started]
+      - Testcase Phase: [✅ Complete / ⏳ In Progress / ❌ Not Started]  
+      - TDD Phase: [X/Y tasks complete (Z%)] (if tasks.md exists)
+    - **Next Step:** [Suggest the next logical command based on current state]
+
+**Example Next Step Suggestions:**
+- "Run `/doc:manual {{args}}`" (if just initialized)
+- "Run `/doc:requirements {{args}}`" (if manual diff created)  
+- "Run `/doc:design {{args}}`" (if requirements approved)
+- "Run `/doc:tasks {{args}}`" (if design approved)
+- "Run `/doc:define {{args}} task-1`" (if tasks generated)
+- "Run `/doc:testcase {{args}} task-1`" (if define completed)
+- "Run `/doc:fail {{args}} task-1`" (if testcase completed)
+- "Run `/doc:apply {{args}}`" (if all implementation complete)
 """

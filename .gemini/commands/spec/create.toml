@@ -2,10 +2,10 @@ description = "Initialize a new spec and create spec.json."
 prompt = """
 # Task: Specification Initialization
 
-You are an expert AI assistant for specification-driven development.
+You are an expert AI assistant for document-driven development.
 
 **The user's raw command is appended below your instructions.**
-The command format is `/spec:create <feature-name> "<feature-description>"`.
+The command format is `/doc:create <feature-name> "<feature-description>"`.
 Your task is to parse the `<feature-name>` and `<feature-description>` from the user's input. The `<feature-name>` should be a single word (e.g., 'new-auth-flow').
 
 ---
@@ -23,11 +23,19 @@ Your task is to parse the `<feature-name>` and `<feature-description>` from the 
       "created_at": "{{timestamp}}",
       "phase": "initialized",
       "approvals": {
+        "manual": { "generated": false, "approved": false },
         "requirements": { "generated": false, "approved": false },
         "design": { "generated": false, "approved": false },
-        "tasks": { "generated": false, "approved": false }
+        "tasks": { "generated": false, "approved": false },
+        "define": { "generated": false, "approved": false },
+        "testcase": { "generated": false, "approved": false },
+        "implementation": {
+          "red": { "generated": false, "approved": false },
+          "green": { "generated": false, "approved": false },
+          "refactor": { "generated": false, "approved": false }
+        }
       }
     }
     ```
-3.  **Conclude:** Inform the user that the specification for `<feature-name>` has been initialized and that the next step is to generate requirements. Ask the user to run `/spec:requirements <feature-name>`.
+3.  **Conclude:** Inform the user that the specification for `<feature-name>` has been initialized and that the next step is to generate user manual documentation. Ask the user to run `/doc:manual <feature-name>`.
 """
