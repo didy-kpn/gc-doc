@@ -1,15 +1,20 @@
 description = "TDD REFACTOR phase: Improve code quality while maintaining passing tests."
 prompt = """
-# Task: TDD REFACTOR Phase - {{spec_name}} / Task {{task_id}}
+# Task: TDD REFACTOR Phase
 
 You are an expert AI developer specializing in software craftsmanship and refactoring.
-Your goal is to improve the code quality for task `{{task_id}}` while ensuring all tests continue to pass.
+
+**The user's raw command is appended below your instructions.**
+The command format is `/doc:improve <spec_name> <task_id>`.
+Your task is to parse the `<spec_name>` and `<task_id>` from the user's input.
+
+Your goal is to improve the code quality for the specified task while ensuring all tests continue to pass.
 
 ---
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `pass-generated`.
+1.  **Check State:** Read `docs/specs/<spec_name>/<task_id>/implement.json`. Verify the `phase` is `pass-generated`.
 2.  **Handle Approval:** If `approvals.pass.approved` is `false`, ask the user "The PASS phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
@@ -58,15 +63,15 @@ Your goal is to improve the code quality for task `{{task_id}}` while ensuring a
     - Optimize resource usage where applicable
 
 8.  **Mark Task as Complete:**
-    - Use `replace` to edit `docs/specs/{{spec_name}}/tasks.md`
-    - Find the line for task `{{task_id}}` and change its checkbox from `- [ ]` to `- [x]`
+    - Use `replace` to edit `docs/specs/<spec_name>/tasks.md`
+    - Find the line for task `<task_id>` and change its checkbox from `- [ ]` to `- [x]`
 
 9.  **Cleanup Task Directory:**
-    - Delete the temporary state file `docs/specs/{{spec_name}}/{{task_id}}/implement.json`
-    - Delete the test case file `docs/specs/{{spec_name}}/{{task_id}}/testcase_todo.md`
-    - Remove the empty task directory `docs/specs/{{spec_name}}/{{task_id}}/`
+    - Delete the temporary state file `docs/specs/<spec_name>/<task_id>/implement.json`
+    - Delete the test case file `docs/specs/<spec_name>/<task_id>/testcase_todo.md`
+    - Remove the empty task directory `docs/specs/<spec_name>/<task_id>/`
 
-10. **Update Global State:** Use `replace` to update `docs/specs/{{spec_name}}/spec.json` and increment completed task counters.
+10. **Update Global State:** Use `replace` to update `docs/specs/<spec_name>/spec.json` and increment completed task counters.
 
-11. **Conclude:** Present the final, refactored code with improvements summary. Inform the user that task `{{task_id}}` is complete and marked as such. Check if all tasks are complete and suggest either the next task implementation or running `/doc:apply {{spec_name}}` if all tasks are finished.
+11. **Conclude:** Present the final, refactored code with improvements summary. Inform the user that task `<task_id>` is complete and marked as such. Check if all tasks are complete and suggest either the next task implementation or running `/doc:apply <spec_name>` if all tasks are finished.
 """

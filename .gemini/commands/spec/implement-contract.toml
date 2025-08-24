@@ -1,24 +1,29 @@
 description = "Define types, interfaces, and function signatures for a task."
 prompt = """
-# Task: Define Types and Interfaces - {{spec_name}} / Task {{task_id}}
+# Task: Define Types and Interfaces
 
 You are an expert AI system architect specializing in type-driven development.
-Your goal is to define comprehensive type definitions, interfaces, and function signatures for task `{{task_id}}` based on the domain modeling in the design document.
+
+**The user's raw command is appended below your instructions.**
+The command format is `/doc:define <spec_name> <task_id>`.
+Your task is to parse the `<spec_name>` and `<task_id>` from the user's input.
+
+Your goal is to define comprehensive type definitions, interfaces, and function signatures for the specified task based on the domain modeling in the design document.
 
 ---
 ### PHASE 1: SETUP & VALIDATION
 ---
 **Actions:**
-1.  **Load Context:** Read `docs/specs/{{spec_name}}/design.md` and `docs/specs/{{spec_name}}/tasks.md`.
+1.  **Load Context:** Read `docs/specs/<spec_name>/design.md` and `docs/specs/<spec_name>/tasks.md`.
 2.  **Validate Task:** Ensure the specified task exists and is ready for implementation.
-3.  **Create Task Directory:** Create the directory `docs/specs/{{spec_name}}/{{task_id}}/` if it does not exist.
+3.  **Create Task Directory:** Create the directory `docs/specs/<spec_name>/<task_id>/` if it does not exist.
 4.  **Initialize State File:**
-    a. Check if `docs/specs/{{spec_name}}/{{task_id}}/implement.json` exists.
+    a. Check if `docs/specs/<spec_name>/<task_id>/implement.json` exists.
     b. If it does NOT exist, create it using the `write_file` tool with the following content:
     ```json
     {
-      "spec_name": "{{spec_name}}",
-      "task_id": "{{task_id}}",
+      "spec_name": "<spec_name>",
+      "task_id": "<task_id>",
       "phase": "pending-define",
       "approvals": {
         "define": { "generated": false, "approved": false },
@@ -59,7 +64,7 @@ Your goal is to define comprehensive type definitions, interfaces, and function 
 
 6.  **Save Definitions:** Save all type definitions, interfaces, and signatures to appropriate source files as specified in the task.
 
-7.  **Update State:** Use the `replace` tool to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `define-generated` and `approvals.define.generated` to `true`.
+7.  **Update State:** Use the `replace` tool to update `docs/specs/<spec_name>/<task_id>/implement.json`. Set `phase` to `define-generated` and `approvals.define.generated` to `true`.
 
-8.  **Request Approval:** Present the implemented type definitions and interfaces. Ask for approval with the exact question: "Do the type definitions, interfaces, and function signatures look correct and complete? To approve and proceed to testcase generation, please run `/doc:testcase {{spec_name}} {{task_id}}`."
+8.  **Request Approval:** Present the implemented type definitions and interfaces. Ask for approval with the exact question: "Do the type definitions, interfaces, and function signatures look correct and complete? To approve and proceed to testcase generation, please run `/doc:testcase <spec_name> <task_id>`."
 """

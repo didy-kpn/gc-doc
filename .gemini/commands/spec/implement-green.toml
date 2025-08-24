@@ -1,15 +1,20 @@
 description = "TDD GREEN phase: Write minimal code to make tests pass."
 prompt = """
-# Task: TDD GREEN Phase - {{spec_name}} / Task {{task_id}}
+# Task: TDD GREEN Phase
 
 You are an expert AI developer specializing in test-driven development.
-Your goal is to write the MINIMUM code necessary to make the failing tests pass for task `{{task_id}}`.
+
+**The user's raw command is appended below your instructions.**
+The command format is `/doc:pass <spec_name> <task_id>`.
+Your task is to parse the `<spec_name>` and `<task_id>` from the user's input.
+
+Your goal is to write the MINIMUM code necessary to make the failing tests pass for the specified task.
 
 ---
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `fail-generated`.
+1.  **Check State:** Read `docs/specs/<spec_name>/<task_id>/implement.json`. Verify the `phase` is `fail-generated`.
 2.  **Handle Approval:** If `approvals.fail.approved` is `false`, ask the user "The FAIL phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
@@ -47,7 +52,7 @@ Your goal is to write the MINIMUM code necessary to make the failing tests pass 
     - Include usage examples from the test cases
     - Document any assumptions or limitations
 
-7.  **Update State:** Use `replace` to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `pass-generated` and `approvals.pass.generated` to `true`.
+7.  **Update State:** Use `replace` to update `docs/specs/<spec_name>/<task_id>/implement.json`. Set `phase` to `pass-generated` and `approvals.pass.generated` to `true`.
 
-8.  **Request Approval:** Present the passing implementation and test results. Ask for approval with the exact question: "All tests are now passing with minimal implementation. To approve and proceed to the REFACTOR phase for code improvement, please run `/doc:improve {{spec_name}} {{task_id}}`."
+8.  **Request Approval:** Present the passing implementation and test results. Ask for approval with the exact question: "All tests are now passing with minimal implementation. To approve and proceed to the REFACTOR phase for code improvement, please run `/doc:improve <spec_name> <task_id>`."
 """

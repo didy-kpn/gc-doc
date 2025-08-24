@@ -1,15 +1,20 @@
 description = "Generate comprehensive test cases in Gherkin format with property tests."
 prompt = """
-# Task: Generate Test Cases - {{spec_name}} / Task {{task_id}}
+# Task: Generate Test Cases
 
 You are an expert AI test architect specializing in behavior-driven development and property-based testing.
-Your goal is to create comprehensive test cases covering unit tests, property tests, and system tests for task `{{task_id}}`.
+
+**The user's raw command is appended below your instructions.**
+The command format is `/doc:testcase <spec_name> <task_id>`.
+Your task is to parse the `<spec_name>` and `<task_id>` from the user's input.
+
+Your goal is to create comprehensive test cases covering unit tests, property tests, and system tests for the specified task.
 
 ---
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Verify the `phase` is `define-generated`.
+1.  **Check State:** Read `docs/specs/<spec_name>/<task_id>/implement.json`. Verify the `phase` is `define-generated`.
 2.  **Handle Approval:** If `approvals.define.approved` is `false`, ask the user "The DEFINE phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
@@ -17,9 +22,9 @@ Your goal is to create comprehensive test cases covering unit tests, property te
 ---
 **Actions:**
 1.  **Load Context:**
-    - Read `docs/specs/{{spec_name}}/design.md` for technical specifications
-    - Read `docs/specs/{{spec_name}}/requirements.md` for acceptance criteria
-    - Read `docs/specs/{{spec_name}}/user-doc.diff` (if exists) for user-facing behavior
+    - Read `docs/specs/<spec_name>/design.md` for technical specifications
+    - Read `docs/specs/<spec_name>/requirements.md` for acceptance criteria
+    - Read `docs/specs/<spec_name>/user-doc.diff` (if exists) for user-facing behavior
     - Load the defined types and interfaces from the previous phase
 
 2.  **Generate Unit Tests (Gherkin Format):**
@@ -73,13 +78,13 @@ Your goal is to create comprehensive test cases covering unit tests, property te
       And [error message should be descriptive]
     ```
 
-6.  **Save Test Cases:** Save all test cases to `docs/specs/{{spec_name}}/{{task_id}}/testcase_todo.md` using structured Gherkin format with clear sections for:
+6.  **Save Test Cases:** Save all test cases to `docs/specs/<spec_name>/<task_id>/testcase_todo.md` using structured Gherkin format with clear sections for:
     - Unit Tests
     - Property Tests  
     - Integration/System Tests
     - Error/Edge Case Tests
 
-7.  **Update State:** Use `replace` to update `docs/specs/{{spec_name}}/{{task_id}}/implement.json`. Set `phase` to `testcase-generated` and `approvals.testcase.generated` to `true`.
+7.  **Update State:** Use `replace` to update `docs/specs/<spec_name>/<task_id>/implement.json`. Set `phase` to `testcase-generated` and `approvals.testcase.generated` to `true`.
 
-8.  **Request Approval:** Present the comprehensive test cases. Ask for approval with the exact question: "Do the test cases cover all scenarios comprehensively? To approve and proceed to the TDD RED phase, please run `/doc:fail {{spec_name}} {{task_id}}`."
+8.  **Request Approval:** Present the comprehensive test cases. Ask for approval with the exact question: "Do the test cases cover all scenarios comprehensively? To approve and proceed to the TDD RED phase, please run `/doc:fail <spec_name> <task_id>`."
 """
