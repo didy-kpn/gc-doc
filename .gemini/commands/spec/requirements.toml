@@ -22,7 +22,7 @@ You are an expert AI business analyst. Your goal is to generate a comprehensive 
 1.  **Load Context:**
     - Read the `spec.json` file at `docs/specs/{{args}}/spec.json` and extract the value of the `description` key. This description is the primary source for the requirements.
     - Read all steering documents from `docs/steering/*.md` to understand project standards, especially `product.md`.
-    - If exists, read `docs/specs/{{args}}/user-doc.diff` to understand user-facing aspects.
+    - If exists, read `docs/specs/{{args}}/manual.diff` to understand user-facing aspects.
     - Perform a high-level search of the codebase for features or components related to '{{args}}' to understand existing context.
 2.  **Generate Document:** Based on the feature description from `spec.json`, create the content for `requirements.md` by loading and populating the template from `.gemini/templates/spec/requirements-template.md`. Ensure all functional and non-functional requirements are considered and acceptance criteria use the EARS format.
 3.  **Save Document:** Save the generated content to `docs/specs/{{args}}/requirements.md` using the `write_file` tool.

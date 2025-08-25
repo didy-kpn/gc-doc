@@ -7,7 +7,7 @@ You are an AI project manager. Your goal is to report the status of the specific
 **Action:**
 1.  **Check Files:** Look for the existence of the following files in `docs/specs/{{args}}/`:
     - `spec.json` (metadata)
-    - `user-doc.diff` (user manual diff)
+    - `manual.diff` (user manual diff)
     - `requirements.md`
     - `design.md`
     - `tasks.md`

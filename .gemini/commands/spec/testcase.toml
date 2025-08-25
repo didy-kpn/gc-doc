@@ -24,7 +24,7 @@ Your goal is to create comprehensive test cases covering unit tests, property te
 1.  **Load Context:**
     - Read `docs/specs/<spec_name>/design.md` for technical specifications
     - Read `docs/specs/<spec_name>/requirements.md` for acceptance criteria
-    - Read `docs/specs/<spec_name>/user-doc.diff` (if exists) for user-facing behavior
+    - Read `docs/specs/<spec_name>/manual.diff` (if exists) for user-facing behavior
     - Load the defined types and interfaces from the previous phase
 
 2.  **Generate Unit Tests (Gherkin Format):**

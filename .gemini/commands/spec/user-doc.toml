@@ -41,7 +41,7 @@ You are an expert technical writer. Your goal is to create a user-facing documen
       - Troubleshooting tips
 
 4.  **Save or Skip:**
-    - **If user-facing:** Save the generated diff content to `docs/specs/{{args}}/user-doc.diff` using the `write_file` tool.
+    - **If user-facing:** Save the generated diff content to `docs/specs/{{args}}/manual.diff` using the `write_file` tool.
     - **If not user-facing:** Skip file creation and proceed to state update.
 
 5.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/spec.json`.
@@ -49,6 +49,6 @@ You are an expert technical writer. Your goal is to create a user-facing documen
     - Add field `"user_doc_diff_generated": true` if diff created, `false` if skipped.
 
 6.  **Request Next Step:**
-    - **If diff created:** Present the generated diff to the user and inform them: "User documentation diff has been generated at `docs/specs/{{args}}/user-doc.diff`. Review the content, then proceed to requirements generation with `/doc:requirements {{args}}`."
+    - **If diff created:** Present the generated diff to the user and inform them: "User documentation diff has been generated at `docs/specs/{{args}}/manual.diff`. Review the content, then proceed to requirements generation with `/doc:requirements {{args}}`."
     - **If skipped:** Inform them: "This feature has no user-facing changes, so no user manual diff was created. Proceed to requirements generation with `/doc:requirements {{args}}`."
 """
