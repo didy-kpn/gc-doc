@@ -31,6 +31,25 @@ You are an expert AI tech lead. Your goal is to break down the approved design f
     - Focus on domain modeling first, then interfaces, then implementation.
     - Use the detailed template from `.gemini/templates/spec/tasks-template.md` to structure the output, ensuring each task maps to a requirement.
 3.  **Save Document:** Save the content to `docs/specs/{{args}}/tasks.md` using the `write_file` tool.
-4.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/progress.json`. Find the line `"phase": "design-approved"` and replace it with `"phase": "tasks-generated"`. Also, update `approvals.tasks.generated` to `true`.
+4.  **Parse Tasks and Update State:**
+    a. From the generated `tasks.md` content, parse all task IDs. Assume they are in the format `## Task: <task_id>`.
+    b. Load the content of `docs/specs/{{args}}/progress.json`.
+    c. Create a JSON object for the `tasks` field. For each parsed task ID, add an entry with the following structure:
+        ```json
+        "<task_id>": {
+          "phase": "pending-define",
+          "approvals": {
+            "define": { "generated": false, "approved": false },
+            "testcase": { "generated": false, "approved": false },
+            "fail": { "generated": false, "approved": false },
+            "pass": { "generated": false, "approved": false },
+            "improve": { "generated": false, "approved": false }
+          }
+        }
+        ```
+    d. Use the `replace` tool to update `docs/specs/{{args}}/progress.json`. In a single operation, replace the old `progress.json` content with the new content that includes:
+        - `"phase"` set to `"tasks-generated"`.
+        - `approvals.tasks.generated` set to `true`.
+        - The `"tasks": {}` object replaced with the newly created tasks object.
 5.  **Conclude:** Inform the user that the specification process is complete and they can start implementation using the `/doc:define` command for a specific task ID.
 """
