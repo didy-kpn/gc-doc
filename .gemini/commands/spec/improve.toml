@@ -14,8 +14,8 @@ Your goal is to improve the code quality for the specified task while ensuring a
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `docs/specs/<spec_name>/<task_id>/implement.json`. Verify the `phase` is `pass-generated`.
-2.  **Handle Approval:** If `approvals.pass.approved` is `false`, ask the user "The PASS phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
+1.  **Check State:** Read `docs/specs/<spec_name>/progress.json`. Verify the `tasks.<task_id>.phase` is `pass-generated`.
+2.  **Handle Approval:** If `tasks.<task_id>.approvals.pass.approved` is `false`, ask the user "The PASS phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
 ### PHASE 2: REFACTOR & IMPROVE CODE QUALITY
@@ -62,16 +62,18 @@ Your goal is to improve the code quality for the specified task while ensuring a
     - Ensure proper input validation and sanitization
     - Optimize resource usage where applicable
 
-8.  **Mark Task as Complete:**
+8.  **Mark Task as Complete in tasks.md:**
     - Use `replace` to edit `docs/specs/<spec_name>/tasks.md`
     - Find the line for task `<task_id>` and change its checkbox from `- [ ]` to `- [x]`
 
-9.  **Cleanup Task Directory:**
-    - Delete the temporary state file `docs/specs/<spec_name>/<task_id>/implement.json`
-    - Delete the test case file `docs/specs/<spec_name>/<task_id>/testcase_todo.md`
-    - Remove the empty task directory `docs/specs/<spec_name>/<task_id>/`
+9.  **Update Task State in progress.json:**
+    - Use `replace` to update `docs/specs/<spec_name>/progress.json`.
+    - Set `tasks.<task_id>.phase` to `completed`.
+    - Increment any relevant global counters in `progress.json` if they exist.
 
-10. **Update Global State:** Use `replace` to update `docs/specs/<spec_name>/spec.json` and increment completed task counters.
+10. **Cleanup Task-Specific Files:**
+    - Delete the test case file `docs/specs/<spec_name>/<task_id>/testcase_todo.md`
+    - Consider removing the task directory `docs/specs/<spec_name>/<task_id>/` if it's now empty.
 
 11. **Conclude:** Present the final, refactored code with improvements summary. Inform the user that task `<task_id>` is complete and marked as such. Check if all tasks are complete and suggest either the next task implementation or running `/doc:apply <spec_name>` if all tasks are finished.
 """

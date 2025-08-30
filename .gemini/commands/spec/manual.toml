@@ -10,7 +10,7 @@ You are an expert technical writer. Your goal is to create a user-facing documen
 **Your Goal:** Ensure the specification has been initialized.
 
 **Actions:**
-1.  **Check State:** Read the metadata file at `docs/specs/{{args}}/spec.json`.
+1.  **Check State:** Read the metadata file at `docs/specs/{{args}}/progress.json`.
 2.  **Verify Phase:** Confirm that the `"phase"` is `"initialized"`. If not, inform the user to run `/doc:create {{args}} "<description>"` first and stop.
 
 ---
@@ -20,7 +20,7 @@ You are an expert technical writer. Your goal is to create a user-facing documen
 
 **Actions:**
 1.  **Load Context:**
-    - Read the `spec.json` file at `docs/specs/{{args}}/spec.json` and extract the value of the `description` key.
+    - Read the `progress.json` file at `docs/specs/{{args}}/progress.json` and extract the value of the `description` key.
     - Read the existing user manual at `docs/steering/user-manual.md` to understand current content structure.
     - Perform a high-level analysis of the feature to understand user-facing aspects.
 
@@ -29,7 +29,7 @@ You are an expert technical writer. Your goal is to create a user-facing documen
     - If the feature is purely internal (internal refactoring, backend optimization, etc.) with no user-facing changes, skip diff generation.
 
 3.  **Generate User Documentation Diff (if applicable):**
-    - Based on the feature description from `spec.json`, create user-facing documentation content.
+    - Based on the feature description from `progress.json`, create user-facing documentation content.
     - Focus on aspects that end-users need to know: installation steps, usage instructions, configuration options, examples, troubleshooting.
     - Format the content as a diff that can be applied to the existing user manual.
     - Include sections like:
@@ -44,7 +44,7 @@ You are an expert technical writer. Your goal is to create a user-facing documen
     - **If user-facing:** Save the generated diff content to `docs/specs/{{args}}/manual.diff` using the `write_file` tool.
     - **If not user-facing:** Skip file creation and proceed to state update.
 
-5.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/spec.json`.
+5.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/progress.json`.
     - Change phase from `"initialized"` to `"manual-generated"` or `"manual-skipped"`.
     - Add field `"user_doc_diff_generated": true` if diff created, `false` if skipped.
 

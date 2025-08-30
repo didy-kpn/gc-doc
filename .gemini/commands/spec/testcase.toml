@@ -14,8 +14,8 @@ Your goal is to create comprehensive test cases covering unit tests, property te
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `docs/specs/<spec_name>/<task_id>/implement.json`. Verify the `phase` is `define-generated`.
-2.  **Handle Approval:** If `approvals.define.approved` is `false`, ask the user "The DEFINE phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
+1.  **Check State:** Read `docs/specs/<spec_name>/progress.json`. Verify the `tasks.<task_id>.phase` is `define-generated`.
+2.  **Handle Approval:** If `tasks.<task_id>.approvals.define.approved` is `false`, ask the user "The DEFINE phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
 ### PHASE 2: COMPREHENSIVE TEST CASE GENERATION
@@ -84,7 +84,7 @@ Your goal is to create comprehensive test cases covering unit tests, property te
     - Integration/System Tests
     - Error/Edge Case Tests
 
-7.  **Update State:** Use `replace` to update `docs/specs/<spec_name>/<task_id>/implement.json`. Set `phase` to `testcase-generated` and `approvals.testcase.generated` to `true`.
+7.  **Update State:** Use `replace` to update `docs/specs/<spec_name>/progress.json`. Under `tasks.<task_id>`, set `phase` to `testcase-generated` and `approvals.testcase.generated` to `true`.
 
 8.  **Request Approval:** Present the comprehensive test cases. Ask for approval with the exact question: "Do the test cases cover all scenarios comprehensively? To approve and proceed to the TDD RED phase, please run `/doc:fail <spec_name> <task_id>`."
 """

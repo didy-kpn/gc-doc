@@ -14,8 +14,8 @@ Your goal is to implement FAILING tests for the specified task based on the comp
 ### PHASE 1: VALIDATION & APPROVAL
 ---
 **Actions:**
-1.  **Check State:** Read `docs/specs/<spec_name>/<task_id>/implement.json`. Verify the `phase` is `testcase-generated`.
-2.  **Handle Approval:** If `approvals.testcase.approved` is `false`, ask the user "The TESTCASE phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
+1.  **Check State:** Read `docs/specs/<spec_name>/progress.json`. Verify the `tasks.<task_id>.phase` is `testcase-generated`.
+2.  **Handle Approval:** If `tasks.<task_id>.approvals.testcase.approved` is `false`, ask the user "The TESTCASE phase is not yet approved. To approve and proceed, please respond with 'y'." Await 'y' response, then update the JSON. Otherwise, stop.
 
 ---
 ### PHASE 2: IMPLEMENT FAILING TESTS
@@ -54,7 +54,7 @@ Your goal is to implement FAILING tests for the specified task based on the comp
     - Ensure failure messages are clear and descriptive
     - Document the expected failure reasons
 
-7.  **Update State:** Use `replace` to update `docs/specs/<spec_name>/<task_id>/implement.json`. Set `phase` to `fail-generated` and `approvals.fail.generated` to `true`.
+7.  **Update State:** Use `replace` to update `docs/specs/<spec_name>/progress.json`. Under `tasks.<task_id>`, set `phase` to `fail-generated` and `approvals.fail.generated` to `true`.
 
 8.  **Request Approval:** Present the failing tests and their failure output. Ask for approval with the exact question: "Do the failing tests correctly represent the expected behavior? To approve and proceed to the TDD GREEN phase, please run `/doc:pass <spec_name> <task_id>`."
 """

@@ -6,16 +6,16 @@ You are an AI project manager. Your goal is to report the status of the specific
 
 **Action:**
 1.  **Check Files:** Look for the existence of the following files in `docs/specs/{{args}}/`:
-    - `spec.json` (metadata)
+    - `progress.json` (metadata)
     - `manual.diff` (user manual diff)
     - `requirements.md`
     - `design.md`
     - `tasks.md`
-2.  **Read State:** If `spec.json` exists, read it to understand the current phase and approval status.
+2.  **Read State:** If `progress.json` exists, read it to understand the current phase and approval status.
 3.  **Analyze `tasks.md`:** If `tasks.md` exists, read its content and count the number of total tasks (`- [ ]` or `- [x]`) and completed tasks (`- [x]`).
 4.  **Report Status:** Present a comprehensive summary to the user:
     - **Specification:** {{args}}
-    - **Current Phase:** [from spec.json phase field]
+    - **Current Phase:** [from progress.json phase field]
     - **User Manual Diff:** [✅ Found / ❌ Not Found / ⚠️ Not Applicable]
     - **Requirements:** [✅ Found / ❌ Not Found] [✅ Approved / ⏳ Pending / ❌ Not Approved]
     - **Design:** [✅ Found / ❌ Not Found] [✅ Approved / ⏳ Pending / ❌ Not Approved]

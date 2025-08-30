@@ -10,13 +10,13 @@ You are an expert AI tech lead. Your goal is to break down the approved design f
 **Your Goal:** Ensure the design for this spec is approved before proceeding.
 
 **Actions:**
-1.  **Check State:** Read the metadata file at `docs/specs/{{args}}/spec.json`.
+1.  **Check State:** Read the metadata file at `docs/specs/{{args}}/progress.json`.
 2.  **Verify Approval:** Check if `approvals.design.approved` is `true`.
 3.  **If Not Approved:**
     a.  Show the user the content of `docs/specs/{{args}}/design.md`.
     b.  Ask the user the exact question: "The design for '{{args}}' is not yet approved. Please review it. To confirm your approval and proceed, please respond with 'y'."
     c.  **Await user response.** If the user responds with 'y', proceed. Otherwise, stop.
-    d.  **Update State on Approval:** If the user approved, use the `replace` tool to update `docs/specs/{{args}}/spec.json`. Find `"approved": false` for design and replace it with `"approved": true`. Also, update the phase to "design-approved".
+    d.  **Update State on Approval:** If the user approved, use the `replace` tool to update `docs/specs/{{args}}/progress.json`. Find `"approved": false` for design and replace it with `"approved": true`. Also, update the phase to "design-approved".
 
 ---
 ### PHASE 2: DOCUMENT-DRIVEN TASK GENERATION
@@ -31,6 +31,6 @@ You are an expert AI tech lead. Your goal is to break down the approved design f
     - Focus on domain modeling first, then interfaces, then implementation.
     - Use the detailed template from `.gemini/templates/spec/tasks-template.md` to structure the output, ensuring each task maps to a requirement.
 3.  **Save Document:** Save the content to `docs/specs/{{args}}/tasks.md` using the `write_file` tool.
-4.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/spec.json`. Find the line `"phase": "design-approved"` and replace it with `"phase": "tasks-generated"`. Also, update `approvals.tasks.generated` to `true`.
+4.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/progress.json`. Find the line `"phase": "design-approved"` and replace it with `"phase": "tasks-generated"`. Also, update `approvals.tasks.generated` to `true`.
 5.  **Conclude:** Inform the user that the specification process is complete and they can start implementation using the `/doc:define` command for a specific task ID.
 """

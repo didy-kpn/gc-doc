@@ -10,7 +10,7 @@ You are an expert AI documentation manager. Your goal is to update the steering 
 **Your Goal:** Ensure the feature implementation is complete.
 
 **Actions:**
-1.  **Check State:** Read the metadata file at `docs/specs/{{args}}/spec.json`.
+1.  **Check State:** Read the metadata file at `docs/specs/{{args}}/progress.json`.
 2.  **Verify Completion:** Check if all tasks in `docs/specs/{{args}}/tasks.md` are marked as complete (`- [x]`).
 3.  **If Not Complete:** Inform the user that all feature implementation tasks must be completed before applying to steering documents and stop.
 
@@ -57,7 +57,7 @@ You are an expert AI documentation manager. Your goal is to update the steering 
 
 6.  **Cleanup:** Remove the temporary `manual.diff` file from `docs/specs/{{args}}/` as it has been applied.
 
-7.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/spec.json`. Add a field `"steering_applied": true` to mark this step as complete. Update phase to "completed".
+7.  **Update State:** Use the `replace` tool to update `docs/specs/{{args}}/progress.json`. Add a field `"steering_applied": true` to mark this step as complete. Update phase to "completed".
 
 8.  **Conclude:** Present a summary of what was updated in each steering document. Inform the user that the feature **{{args}}** has been fully integrated into the project's steering documents and the document-driven development process is now complete.
 """
