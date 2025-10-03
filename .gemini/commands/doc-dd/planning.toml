@@ -203,9 +203,9 @@ plan.md
 
 ## 完了報告
 ```markdown
-✅ 実装計画書が作成されました: `ChangeLogs///plan.md`
+✅ 実装計画書が作成されました: `plan.md`
 
 ### 次のステップ
-`/doc-dd:tasks "ChangeLogs///plan.md"` でタスク分割を推奨します。
+`/doc-dd:tasks "plan.md"` でタスク分割を推奨します。
 ```
 """
