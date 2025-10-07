@@ -1,10 +1,13 @@
 {
   "name": "Gemini CLI",
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:0-bullseye",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node",
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/rust:1": {}
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "toolsToInstall": "uv"
+    }
   },
   "postCreateCommand": "npm install -g @google/gemini-cli",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
