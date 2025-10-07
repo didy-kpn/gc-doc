@@ -26,7 +26,7 @@
     - 実装計画書を分析し、開発者が着手可能な粒度のタスクリスト (`tasks.md`) をイテレーション計画と共に生成します。
 
 4.  **💻 Phase 4: 実装 (`/doc-dd:implement`)**
-    - 分割されたタスクに基づき、具体的なコーディングを行います。(このコマンドは将来的に実装予定)
+    - 分割されたタスクに基づき、具体的なコーディングを行います。
 
 ## 🛠️ コマンド体系
 
@@ -37,6 +37,7 @@
 | `/doc-dd:document` | ドキュメントの作成・更新・管理 | ユーザーの要求 | `README.md`, `docs/*.md` |
 | `/doc-dd:planning` | 実装計画書の生成 | ドキュメントの変更 | `plan.md` |
 | `/doc-dd:tasks` | タスクリストの生成 | `plan.md` | `tasks.md` |
+| `/doc-dd:implement`| 分割されたタスクに基づき、具体的なコーディングを行う | `tasks.md` | ソースコード |
 
 各コマンドの詳細は `.gemini/commands/doc-dd/` 配下の `*.toml` ファイルを参照してください。
 
@@ -58,7 +59,7 @@
     ```bash
     /doc-dd:planning
     /doc-dd:tasks
-    # /doc-dd:implement "[IT-0]..."
+    /doc-dd:implement "[IT-0] [Setup] 開発環境セットアップ"
     ```
 
 ## 📜 ライセンス

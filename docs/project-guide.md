@@ -11,6 +11,7 @@
     - `/doc-dd:document`: ドキュメントの作成・更新・管理
     - `/doc-dd:planning`: ドキュメントの変更点から実装計画を生成
     - `/doc-dd:tasks`: 実装計画からタスクリストを生成
+    - `/doc-dd:implement`: タスクに基づき、具体的なコーディングを行う
 - **技術スタック**:
     - Gemini CLI
     - toml (コマンド設定)
